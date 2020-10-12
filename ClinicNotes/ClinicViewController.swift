@@ -11,12 +11,22 @@ import CoreData
 import Firebase
 import SDWebImage
 
-class ClinicViewController: UITableViewController {
+class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var clinics = Array<FIRClinic>()
+    private var filteredClinics = Array<FIRClinic>()
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
+   
+    @IBOutlet weak var tableView: UITableView!
     
-    var clinics = Array<FIRClinic>()
     
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -43,32 +53,30 @@ class ClinicViewController: UITableViewController {
         super.viewDidLoad()
         MyRef.reference = Database.database().reference(withPath: "Cliniks")
         checkLoggedIn()
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Clinic, Location or City"
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        
+        navigationItem.searchController = searchController
+        definesPresentationContext = false
 
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        let editClinicVC = segue.destination as? DetailViewController
-    //    let addNewDevicesVC = segue.destination as? DevicesTableViewController
-
+        
         switch segue.identifier {
-        case "addClinic":
-            print("CASE ADDCLINIC")
-
-            let navigation: UINavigationController = segue.destination as! UINavigationController
-            guard let myNewClinicVC = navigation.viewControllers[0] as? DetailViewController else {return}
-
-
+       
         case "devices":
-            
             let devicesVC = segue.destination as? DevicesViewController
-            print("devices segue")
             devicesVC?.selectedClinic = sender as? FIRClinic
         case "edit":
-            print("CASE EDIT")
+             let editClinicVC = segue.destination as? DetailViewController
             editClinicVC?.selectedClinic = sender as? (UIImage, FIRClinic)
-            
+             editClinicVC?.incomeSegue = segue.identifier!
         default:
             break
         }
@@ -78,29 +86,25 @@ class ClinicViewController: UITableViewController {
     @IBAction func saveButton(_ unwindSegue: UIStoryboardSegue) {
         guard unwindSegue.identifier == "addClinic" else {return}
         guard let source = unwindSegue.source as? DetailViewController else { return }
-        print("-----------------UnwindSegue------------------")
-       // source.saveTask()
         source.saveClinicIntoFirebase()
         tableView.reloadData()
 
     }
     
-    @IBAction func addClinicButton(_ sender: Any) {
+ 
 
-        performSegue(withIdentifier: "addClinic", sender: self)
-        
-    }
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredClinics.count
+        }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-       
        return clinics.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
  
-        let clinic = clinics[indexPath.row]
+        let clinic = isFiltering ? filteredClinics[indexPath.row] : clinics[indexPath.row]
         
         cell.accessoryType = .detailButton
         cell.nameLabel.text = clinic.name
@@ -115,32 +119,36 @@ class ClinicViewController: UITableViewController {
             cell.imageOfClinic.image = UIImage(named: "placeholder-image")
         }
 
+
         return cell
 
     }
 
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
         let cellImage = cell.imageOfClinic.image
-        let selectedClinic = clinics[indexPath.row] as FIRClinic
+        let selectedClinic = isFiltering ? filteredClinics[indexPath.row] as FIRClinic : clinics[indexPath.row] as FIRClinic
         performSegue(withIdentifier: "edit", sender: (cellImage, selectedClinic))
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let selectedClinic = clinics[indexPath.row] as FIRClinic
+        let selectedClinic = isFiltering ? filteredClinics[indexPath.row] as FIRClinic : clinics[indexPath.row] as FIRClinic
        performSegue(withIdentifier: "devices", sender: selectedClinic)
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == .delete {
-            let selectedClinic = clinics[indexPath.row] as FIRClinic
+            let selectedClinic = isFiltering ? filteredClinics[indexPath.row] as FIRClinic : clinics[indexPath.row] as FIRClinic
             selectedClinic.ref?.removeValue()
         }
 
     }
+    
+
+
 
 }
 
@@ -163,3 +171,25 @@ extension ClinicViewController {
 }
 
 
+extension ClinicViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        filterContentForSearchText(searchController.searchBar.text!)
+        
+    }
+    
+    private func filterContentForSearchText(_ searchText: String) {
+        
+        filteredClinics = clinics.filter({ (clinic) -> Bool in
+            return clinic.name.lowercased().contains(searchText.lowercased()) ||
+                   clinic.location!.lowercased().contains(searchText.lowercased()) ||
+                clinic.city!.lowercased().contains(searchText.lowercased())
+
+        })
+    
+        tableView.reloadData()
+        
+    }
+
+}

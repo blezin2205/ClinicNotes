@@ -18,6 +18,9 @@ class DetailViewController: UITableViewController {
     var ref: DatabaseReference?
     
     var imageIsChanged = false
+    var longitude: String?
+    var latitude: String?
+    var incomeSegue = ""
     
 
     @IBOutlet weak var clinicImage: UIImageView!
@@ -25,19 +28,26 @@ class DetailViewController: UITableViewController {
     @IBOutlet weak var clinicLocation: UITextField!
     @IBOutlet weak var clinicCity: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var showAddress: UIButton!
+    @IBOutlet weak var getAddress: UIButton!
     
+    @IBOutlet weak var createdByLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = MyRef.reference
+        
+        if incomeSegue == "edit" {
+            createdByLabel.text = "created by \(selectedClinic!.clinic.userId )"
+            createdByLabel.font = .italicSystemFont(ofSize: 13)
+        }
        
         navigationController?.navigationBar.prefersLargeTitles = false
         saveButton.isEnabled = false
         clinicName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         setupEditScreen()
-        
-       
+ 
 
     
     }
@@ -45,6 +55,50 @@ class DetailViewController: UITableViewController {
     @IBAction func cancelButton(_ sender: Any) {
         dismiss(animated: true)
     }
+    
+    
+    @IBAction func showCurrentClinicLocation(_ sender: Any) {
+        
+        let latitude = self.latitude != nil ?  self.latitude :  selectedClinic?.clinic.latitude
+        let longitude = self.longitude != nil ?  self.longitude :  selectedClinic?.clinic.longitude
+        guard let _latitude = latitude, let _longitude = longitude else {
+            showAlert(title: "Error", message: "Location not exist or empty")
+            return }
+        
+      if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+        UIApplication.shared.open(URL(string:"comgooglemaps://?saddr=&daddr=\(_latitude),\(_longitude)&directionsmode=driving")!)
+      }
+      else {
+        showAlert(title: "GoogleMaps", message: "Can't use comgooglemaps://")
+          
+      }
+
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let mapVC = segue.destination as? GooglemapVC else { return }
+        mapVC.mapViewControllerDelegate = self
+        mapVC.clinic = selectedClinic?.clinic
+        print("to googlemap")
+    }
+    
+    
+    
+    
+    
+     func showAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAction)
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
     
     func uploadPhoto(completion: @escaping (_ url: String)->()) {
         
@@ -92,7 +146,11 @@ class DetailViewController: UITableViewController {
         } else {
             
             let user = Auth.auth().currentUser?.displayName
-            let firClinic = FIRClinic.init(name: clinicName.text!, location: clinicLocation.text, city: clinicCity.text, image: nil, userId: user ?? "")
+            let firClinic = FIRClinic.init(name: clinicName.text!,
+                                           location: clinicLocation.text,
+                                           city: clinicCity.text, image: nil,
+                                           userId: user ?? "",
+                                           longitude: longitude, latitude: latitude)
             MyRef.reference?.child(clinicName.text!).setValue(firClinic.convertToDictionary())
             
             if imageIsChanged {
@@ -112,7 +170,6 @@ class DetailViewController: UITableViewController {
         if selectedClinic != nil {
             
             setupNavigationBar()
-            imageIsChanged = true
 
             clinicImage.image = selectedClinic?.image
             clinicImage.contentMode = .scaleAspectFill
@@ -120,7 +177,7 @@ class DetailViewController: UITableViewController {
             clinicLocation.text = selectedClinic?.clinic.location
             clinicCity.text = selectedClinic?.clinic.city
            
-        }
+        } else { showAddress.isHidden = true }
     }
     
     private func setupNavigationBar() {
@@ -226,4 +283,15 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
         
         dismiss(animated: true)
     }
+}
+
+extension DetailViewController: MapViewControllerDelegate {
+    func getAddress(_ address: String?, _ city: String?, _ longitude: String?, _ latitude: String?) {
+        clinicLocation.text = address
+        clinicCity.text = city
+        self.longitude = longitude
+        self.latitude = latitude
+    }
+    
+
 }

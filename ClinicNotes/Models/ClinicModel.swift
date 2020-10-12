@@ -16,15 +16,18 @@ struct FIRClinic {
     var image: String?
     var userId: String
     let ref: DatabaseReference?
-    var completed: Bool = false
+    var longitude: String?
+    var latitude: String?
     
-    init(name: String, location: String?, city: String?, image: String?, userId: String) {
+    init(name: String, location: String?, city: String?, image: String?, userId: String, longitude: String?, latitude: String?) {
         self.name = name
         self.location = location
         self.city = city
         self.image = image
         self.userId = userId
         self.ref = nil
+        self.longitude = longitude
+        self.latitude = latitude
     }
     
     init(snapshot: DataSnapshot) {
@@ -34,12 +37,13 @@ struct FIRClinic {
         city = snapshotValue["city"] as? String
         image = snapshotValue["image"] as? String
         userId = snapshotValue["userId"] as! String
-        completed = snapshotValue["completed"] as! Bool
+        longitude = snapshotValue["longitude"] as? String
+        latitude = snapshotValue["latitude"] as? String
         ref = snapshot.ref
     }
     
     func convertToDictionary() -> Any {
  
-        return ["name": name, "location": location as Any, "city": city as Any, "image": image as Any, "userId": userId, "completed": completed]
+        return ["name": name, "location": location as Any, "city": city as Any, "image": image as Any, "userId": userId, "longitude": longitude as Any, "latitude": latitude as Any]
     }
 }

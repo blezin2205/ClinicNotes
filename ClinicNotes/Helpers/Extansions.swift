@@ -31,6 +31,39 @@ extension UIView {
             self.alpha = 0.0
         }, completion: completion)
     }
+    
+    func anchorSize(to view: UIView) {
+           widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+           heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+       }
+    
+    func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let top = top {
+            topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
+        }
+        
+        if let leading = leading {
+            leadingAnchor.constraint(equalTo: leading, constant: padding.left).isActive = true
+        }
+        
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -padding.bottom).isActive = true
+        }
+        
+        if let trailing = trailing {
+            trailingAnchor.constraint(equalTo: trailing, constant: -padding.right).isActive = true
+        }
+        
+        if size.width != 0 {
+            widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        }
+        
+        if size.height != 0 {
+            heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        }
+    }
 }
 
 extension UIColor {
@@ -55,6 +88,7 @@ extension UIColor {
 }
 
 extension UIButton {
+    
     func applyGradient(colors: [CGColor]) {
         self.backgroundColor = nil
         self.layoutIfNeeded()
@@ -77,6 +111,8 @@ extension UIButton {
         self.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17.0)
         self.titleLabel?.textColor = UIColor.white
     }
+    
+
 }
 
 public func UIColorFromRGB(_ rgbValue: Int) -> UIColor {
@@ -100,12 +136,32 @@ extension UILabel {
             
             self.textColor = UIColor(patternImage: myGradient!)
         }
+
     
-        
     
         
     }
     
 
+class SearchBarContainerView: UIView {
+
+    let searchBar: UISearchBar
+
+    required init?(coder aDecoder: NSCoder) {
+        searchBar = UISearchBar()
+        super.init(coder: aDecoder)
+    }
+
+    init(searchBar: UISearchBar) {
+        self.searchBar = searchBar
+        super.init(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: 44.0))
+        addSubview(searchBar)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        searchBar.frame = bounds
+    }
+}
 
 

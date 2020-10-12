@@ -13,7 +13,7 @@ class CustomTableViewCell: UITableViewCell {
     
     @IBOutlet var imageOfClinic: UIImageView! {
         didSet {
-            imageOfClinic.layer.cornerRadius = imageOfClinic.frame.size.height / 2
+            imageOfClinic.layer.cornerRadius = imageOfClinic.frame.size.height / 10
             imageOfClinic.clipsToBounds = true
         }
     }

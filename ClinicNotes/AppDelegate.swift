@@ -11,6 +11,8 @@ import CoreData
 import FBSDKCoreKit
 import Firebase
 import GoogleSignIn
+import GoogleMaps
+import GooglePlaces
 
 
 let primaryColor = UIColor(red: 210/255, green: 109/255, blue: 128/255, alpha: 1)
@@ -25,11 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        
+        GMSServices.provideAPIKey("AIzaSyBwl8FqxBc29tpfytjxNbpZxDR7jAL80Uo")
+        GMSPlacesClient.provideAPIKey("AIzaSyBwl8FqxBc29tpfytjxNbpZxDR7jAL80Uo")
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
         GIDSignIn.sharedInstance()?.clientID = FirebaseApp.app()?.options.clientID
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         
         return true
     }
