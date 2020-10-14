@@ -13,6 +13,7 @@ class DevicesViewController: UITableViewController {
     
     var selectedClinic: FIRClinic?
 
+    
     var devices = Array<Device>()
     var searchController = UISearchController(searchResultsController: nil)
     
@@ -43,42 +44,58 @@ class DevicesViewController: UITableViewController {
 
         
     }
-    @IBAction func addButton(_ sender: Any) {
-       
-        
-        let alertController = UIAlertController(title: "New Task", message: "Add new task", preferredStyle: .alert)
-        alertController.addTextField()
-        let save = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+
+    
+    
+    @IBAction func SaveDevice(_ unwindSegue: UIStoryboardSegue) {
+        guard unwindSegue.identifier == "addDevice" else {return}
+        guard let source = unwindSegue.source as? NewDeviceViewController else { return }
+        guard let currentUser = Auth.auth().currentUser?.displayName else {return}
+        if let nameofDevice = source.label.text, !nameofDevice.isEmpty {
+            let date = Date()
+            let format = DateFormatter()
+            format.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            let timestamp = "\(currentUser), \(format.string(from: date))"
+            let device = Device(name: nameofDevice, serialNumber: source.serialNumberField.text, dateUpdated: timestamp)
+            let deviceRef = self.selectedClinic?.ref?.child("Devices").child(nameofDevice.lowercased())
+            deviceRef?.setValue(device.convertToDictionary())
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDevice" {
             
-            guard let textField = alertController.textFields?.first, textField.text != "" else { return }
-            let task = Device(name: textField.text!, serialNumber: "123")
-            let taskRef = self!.selectedClinic!.ref?.child("Devices").child(task.name.lowercased())
-            taskRef?.setValue(task.convertToDictionary())
+            let notecVC = segue.destination as? NotesViewController
+            notecVC?.selectedDevice = sender as? Device
             
         }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-        alertController.addAction(save)
-        alertController.addAction(cancel)
-        
-        present(alertController, animated: true, completion: nil)
-        
     }
+    
     
     // MARK: - Table view data source
 
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return devices.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = devices[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDeviceCell
+        cell.deviceLabel.text = devices[indexPath.row].name
+        cell.serialLabel.text = devices[indexPath.row].serialNumder
+        cell.dateLabel.text = "Last update: \(devices[indexPath.row].dateUpdated)" 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let sender = devices[indexPath.row]
+        
+        performSegue(withIdentifier: "showDevice", sender: sender)
+    }
+    
+ 
 
 
 }

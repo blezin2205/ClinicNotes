@@ -51,6 +51,9 @@ class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.backgroundColor = .clear
+        view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         MyRef.reference = Database.database().reference(withPath: "Cliniks")
         checkLoggedIn()
         
@@ -137,12 +140,22 @@ class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let selectedClinic = isFiltering ? filteredClinics[indexPath.row] as FIRClinic : clinics[indexPath.row] as FIRClinic
        performSegue(withIdentifier: "devices", sender: selectedClinic)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
 
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == .delete {
             let selectedClinic = isFiltering ? filteredClinics[indexPath.row] as FIRClinic : clinics[indexPath.row] as FIRClinic
-            selectedClinic.ref?.removeValue()
+            if Auth.auth().currentUser?.displayName == selectedClinic.userId {
+                selectedClinic.ref?.removeValue()
+            } else {
+                self.showAlert(title: "Delete denied!", message: "You not created this Clinic!")
+            
+            }
+            
         }
 
     }

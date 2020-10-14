@@ -25,7 +25,7 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
     var clinicLocation: String?
     var clinicName: String?
     var mapViewControllerDelegate: MapViewControllerDelegate?
-    var currentCity = String()
+    var currentCity: String?
     var viewForSearch: UIView?
     var endCoord: CLLocation?
     
@@ -52,7 +52,7 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
         addressLabel.textColor = .black
         addressLabel.font = .boldSystemFont(ofSize: 21)
         addressLabel.lineBreakMode = .byWordWrapping
-        addressLabel.numberOfLines = 2
+        addressLabel.numberOfLines = 3
         return addressLabel
         
     }()
@@ -62,6 +62,11 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
         let getButton = UIButton()
         getButton.setTitle("Done", for: .normal)
         getButton.setTitleColor(.black, for: .normal)
+        getButton.backgroundColor = .white
+        getButton.layer.cornerRadius = 5
+        getButton.layer.borderWidth = 0.8
+        getButton.layer.borderColor = UIColor.black.cgColor
+        
         getButton.titleLabel?.font = .boldSystemFont(ofSize: 21)
         getButton.addTarget(self, action: #selector(getAddress), for: .touchUpInside)
         return getButton
@@ -112,8 +117,11 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
                                               currentCity,
                                               endCoord?.coordinate.longitude.description,
                                               endCoord?.coordinate.latitude.description)
-        clinic?.ref?.updateChildValues(["longitude": endCoord?.coordinate.longitude.description ?? "",
-                                        "latitude": endCoord?.coordinate.latitude.description ?? ""])
+        if let coordinate = endCoord {
+            clinic?.ref?.updateChildValues(["longitude": coordinate.coordinate.longitude.description,
+                                            "latitude":  coordinate.coordinate.latitude.description])
+        }
+        
         dismiss(animated: true, completion: nil)
         
     }
@@ -135,17 +143,19 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
                            size: .init(width: 30, height: 30))
         addressLabel.anchor(top: closeButton.bottomAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: nil, trailing: view.safeAreaLayoutGuide.trailingAnchor,
                             padding: .init(top: 6, left: 12, bottom: 0, right: 12),
-                            size: .init(width: view.frame.width, height: 60))
+                            size: .init(width: view.frame.width, height: 80))
         
     }
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let userLocation = locations.last
-        let center = CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude)
-        
-        let camera = GMSCameraPosition.camera(withLatitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude, zoom: 15)
+        guard  let userLocation = locations.last else {
+            addressLabel.text = "User location not defined!"
+            return }
+        let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        endCoord = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        let camera = GMSCameraPosition.camera(withTarget: center, zoom: 15)
         mapView.camera = camera
         
         locationManager.stopUpdatingLocation()
@@ -154,16 +164,18 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
         geocoder.reverseGeocodeCoordinate(center) { (placemarks, error) in
             
             if let error = error {
-                print(error)
+                self.addressLabel.text = "Error!\n\(error.localizedDescription))"
+                
                 return
             }
             guard let placemarks = placemarks else { return }
             let placemark = placemarks.firstResult()
             let streetName = placemark?.thoroughfare
-            self.currentCity = placemark?.locality ?? ""
-            self.endCoord = CLLocation(latitude: placemark!.coordinate.latitude, longitude: placemark!.coordinate.longitude)
-            
-            if streetName != nil {
+            self.currentCity = placemark?.locality
+
+            if streetName == nil || streetName == "Unnamed Road" {
+                self.addressLabel.text = "Street can't be defined!"
+            } else {
                 self.addressLabel.text = "\(streetName!)"
             }
         }
@@ -182,13 +194,18 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
         geocoder.reverseGeocodeCoordinate(coordinates) { (response, error) in
             
             if let error = error {
-                print(error.localizedDescription)
+                self.addressLabel.text = error.localizedDescription
             }
             
             guard let response = response else {return}
+            guard let firstResult = response.firstResult() else {return}
+            if let streetName = firstResult.thoroughfare {
+                self.addressLabel.text = streetName
+            } else {
+                self.addressLabel.text = "Street can't be defined!"
+            }
             
-            self.addressLabel.text = response.firstResult()?.thoroughfare
-            self.currentCity = response.firstResult()?.locality ?? ""
+            self.currentCity = response.firstResult()?.locality
             self.endCoord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         }
     }

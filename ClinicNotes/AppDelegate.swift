@@ -15,8 +15,8 @@ import GoogleMaps
 import GooglePlaces
 
 
-let primaryColor = UIColor(red: 210/255, green: 109/255, blue: 128/255, alpha: 1)
-let secondaryColor = UIColor(red: 107/255, green: 148/255, blue: 230/255, alpha: 1)
+let primaryColor = UIColor(red: 15/255, green: 40/255, blue: 62/255, alpha: 1)
+let secondaryColor = UIColor(red: 1/255, green: 46/255, blue: 44/255, alpha: 1)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.database().isPersistenceEnabled = true
         GIDSignIn.sharedInstance()?.clientID = FirebaseApp.app()?.options.clientID
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         
         
         return true

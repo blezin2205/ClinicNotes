@@ -16,7 +16,7 @@ class LoginViewController: UIViewController {
     
     var userProfile: UserProfile?
     var labelEmpty = true
-    var slogan = "MyClinic App. Welcome!"
+    var slogan = "ClinicNotes App. Welcome!"
     
     
     lazy var customFBLoginButton: UIButton = {
@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
         loginButton.setImage(icon, for: .normal)
         loginButton.imageView?.contentMode = .scaleAspectFit
         loginButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
-        loginButton.applyGradient(colors: [UIColorFromRGB(0x1B2926).cgColor, UIColorFromRGB(0x2db1cf).cgColor])
+        loginButton.applyGradient(colors: [UIColorFromRGB(0x173d37).cgColor, UIColorFromRGB(0x1B2926).cgColor])
         loginButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
         return loginButton
     }()
@@ -47,7 +47,7 @@ class LoginViewController: UIViewController {
         loginButton.setImage(icon, for: .normal)
         loginButton.imageView?.contentMode = .scaleAspectFit
         loginButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -35, bottom: 0, right: 0)
-        loginButton.applyGradient(colors: [UIColorFromRGB(0x1B2926).cgColor, UIColorFromRGB(0x2db1cf).cgColor])
+        loginButton.applyGradient(colors: [UIColorFromRGB(0x1B2926).cgColor, UIColorFromRGB(0x173d37).cgColor])
         
         loginButton.addTarget(self, action: #selector(handleCustomGoogleLogin), for: .touchUpInside)
         return loginButton
@@ -77,17 +77,15 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        
-        
-        
+
         if labelEmpty {
             
             let sloganArray = slogan.components(separatedBy: " ")
             var i = 0.0
             for word in sloganArray{
                 
-                let label = UILabel(frame: CGRect(x: -200, y: view.frame.height/4 + CGFloat(i*110), width: 170, height: 80))
+                let label = UILabel(frame: CGRect(x: -200, y: view.frame.height/4 + CGFloat(i*110), width: 220, height: 80))
+                label.font = .boldSystemFont(ofSize: 40)
                 label.contentMode = .scaleToFill
                 label.textAlignment = .center
                 label.highlightedTextColor = .black
@@ -95,7 +93,6 @@ class LoginViewController: UIViewController {
                 label.textColor = .white
                 label.highlightedTextColor = .black
                 label.textDropShadow()
-                label.font = UIFont(name: "Pacifico", size: 40)
                 label.center.x = view.center.x
                 label.center.x -= view.bounds.width
                 
@@ -104,8 +101,7 @@ class LoginViewController: UIViewController {
                 
                 
                 UIView.animate(withDuration: 0.7, delay: i, options: .curveEaseOut, animations: {
-                    
-                    
+
                     label.center.x += self.view.bounds.width
                     self.view.layoutIfNeeded()
                 }, completion: { finished in
@@ -119,20 +115,18 @@ class LoginViewController: UIViewController {
         }
         
     }
-    
-    
-    
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "4153735.png")!)
+        
+        view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
+      //  self.view.backgroundColor = UIColor(patternImage: UIImage(named: "4153735.png")!)
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance()?.presentingViewController = self
         
         setupViews()
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -182,7 +176,12 @@ extension LoginViewController: LoginButtonDelegate {
     }
     
     private func openMainViewController() {
-        dismiss(animated: true)
+        
+            self.dismiss(animated: true, completion: nil)
+        
+        
+        
+        
     }
     
     // *** FacebookCustomLoginButton ***
@@ -260,8 +259,11 @@ extension LoginViewController: LoginButtonDelegate {
                 print(error)
                 return
             }
-            print("Successfully saved user into FirebaseDatabase")
-            self.openMainViewController()
+           
+                 print("Successfully saved user into FirebaseDatabase")
+                           self.openMainViewController()
+            
+           
         }
     }
     
@@ -306,3 +308,5 @@ extension LoginViewController: GIDSignInDelegate {
     
     
 }
+
+

@@ -62,14 +62,14 @@ class DetailViewController: UITableViewController {
         let latitude = self.latitude != nil ?  self.latitude :  selectedClinic?.clinic.latitude
         let longitude = self.longitude != nil ?  self.longitude :  selectedClinic?.clinic.longitude
         guard let _latitude = latitude, let _longitude = longitude else {
-            showAlert(title: "Error", message: "Location not exist or empty")
+            self.showAlert(title: "Error", message: "Location not exist or empty")
             return }
         
       if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
         UIApplication.shared.open(URL(string:"comgooglemaps://?saddr=&daddr=\(_latitude),\(_longitude)&directionsmode=driving")!)
       }
       else {
-        showAlert(title: "GoogleMaps", message: "Can't use comgooglemaps://")
+        self.showAlert(title: "GoogleMaps", message: "Can't use comgooglemaps://")
           
       }
 
@@ -87,16 +87,7 @@ class DetailViewController: UITableViewController {
     
     
     
-     func showAlert(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        alert.addAction(okAction)
-        
-        self.present(alert, animated: true, completion: nil)
-        
-    }
+
     
     
     

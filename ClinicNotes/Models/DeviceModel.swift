@@ -13,12 +13,14 @@ struct Device {
     
     let name: String
     let serialNumder: String?
+    let dateUpdated: String
     let ref: DatabaseReference?
     
     
-    init(name: String, serialNumber: String?) {
+    init(name: String, serialNumber: String?, dateUpdated: String) {
         self.name = name
         self.serialNumder = serialNumber
+        self.dateUpdated = dateUpdated
         self.ref = nil
     }
     
@@ -28,12 +30,13 @@ struct Device {
     let snapshotValue = snapshot.value as! [String: AnyObject]
     name = snapshotValue["name"] as! String
     serialNumder = snapshotValue["serialNumder"] as? String
+    dateUpdated = snapshotValue["dateUpdated"] as! String
         ref = snapshot.ref
     }
     
      func convertToDictionary() -> Any {
     
-           return ["name": name, "serialNumder": serialNumder ]
+        return ["name": name, "serialNumder": serialNumder, "dateUpdated": dateUpdated ]
        }
     
     
