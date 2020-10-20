@@ -34,8 +34,17 @@ class DetailViewController: UITableViewController {
     @IBOutlet weak var createdByLabel: UILabel!
     
     
+    override func viewWillAppear(_ animated: Bool) {
+         
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.tableFooterView = UIView()
+        self.tableView.backgroundColor = .clear
+        setTableViewBackgroundGradient()
+        
         ref = MyRef.reference
         
         if incomeSegue == "edit" {
@@ -82,14 +91,7 @@ class DetailViewController: UITableViewController {
         mapVC.clinic = selectedClinic?.clinic
         print("to googlemap")
     }
-    
-    
-    
-    
-    
 
-    
-    
     
     func uploadPhoto(completion: @escaping (_ url: String)->()) {
         
@@ -184,7 +186,7 @@ class DetailViewController: UITableViewController {
     
 
     
- 
+
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -224,15 +226,16 @@ class DetailViewController: UITableViewController {
     }
 
 
-
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+          cell.backgroundColor = .clear
+      }
 
 }
 
 
 // MARK: Text field delegate
 extension DetailViewController: UITextFieldDelegate {
-    
-    // Скрываем клавиатуру по нажатию на Done
+
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

@@ -1,6 +1,5 @@
-//
-//  LoginViewController.swift
-//  Networking
+
+
 //
 //  Created by Alex Stepanov on 10.02.2020.
 //  Copyright © 2020 Alex Stepanov. All rights reserved.

@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import Firebase
 import SDWebImage
+import FBSDKLoginKit
+import GoogleSignIn
 
 class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -52,6 +54,10 @@ class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+       
+        
+        tableView.tableFooterView = UIView()
         tableView.backgroundColor = .clear
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         MyRef.reference = Database.database().reference(withPath: "Cliniks")
@@ -68,6 +74,34 @@ class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
+    
+    
+    @IBAction func logOutButton(_ sender: Any) {
+        
+        if let providerData = Auth.auth().currentUser?.providerData {
+            
+            for userInfo in providerData {
+                
+                switch userInfo.providerID {
+                case "facebook.com":
+                    LoginManager().logOut()
+                    print("User did log out of facebook")
+                    openLoginViewController()
+                case "google.com":
+                    GIDSignIn.sharedInstance()?.signOut()
+                    print("User did log out of google")
+                    openLoginViewController()
+                case "password":
+                    try! Auth.auth().signOut()
+                    print("User did sing out")
+                    openLoginViewController()
+                default:
+                    self.showAlert(title: "Error", message: "Unable to LogOut!")
+                }
+            }
+        }
+        
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -165,6 +199,8 @@ class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 }
 
+
+
 extension ClinicViewController {
     
     private func checkLoggedIn() {
@@ -180,6 +216,23 @@ extension ClinicViewController {
             }
         }
 
+    }
+    
+    private func openLoginViewController() {
+        
+        do {
+            try Auth.auth().signOut()
+            
+            DispatchQueue.main.async {
+                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                self.present(loginViewController, animated: true)
+                return
+            }
+            
+        } catch let error {
+            self.showAlert(title: "LogOut Error!", message: error.localizedDescription)
+        }
     }
 }
 

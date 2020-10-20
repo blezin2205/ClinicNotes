@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		12B05E606A40542EE9F06165 /* Pods_ClinicNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BEA25B461A3A433226ED4B3 /* Pods_ClinicNotes.framework */; };
+		FA2CBA3F253F0B2D00CB0A28 /* RecentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2CBA3E253F0B2D00CB0A28 /* RecentsModel.swift */; };
+		FA2CBA41253F12E900CB0A28 /* CustomRecentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2CBA40253F12E900CB0A28 /* CustomRecentsCell.swift */; };
 		FA34B6482535E66500B0A619 /* NewDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34B6472535E66500B0A619 /* NewDeviceViewController.swift */; };
 		FA5622882534E86800DBCFC5 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5622872534E86800DBCFC5 /* DeviceModel.swift */; };
 		FA7952C225288C0D009D3315 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952C125288C0D009D3315 /* AppDelegate.swift */; };
@@ -30,19 +32,21 @@
 		FA7952F72528A124009D3315 /* MyRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F62528A124009D3315 /* MyRef.swift */; };
 		FA7952F92528B190009D3315 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA7952F82528B190009D3315 /* GoogleService-Info.plist */; };
 		FA7952FB25292370009D3315 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952FA25292370009D3315 /* DevicesViewController.swift */; };
-		FA7952FD25292F9F009D3315 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952FC25292F9F009D3315 /* UserProfileVC.swift */; };
 		FABB3F7B252F73DC00A828D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB3F7A252F73DC00A828D8 /* MapViewController.swift */; };
 		FABB3F7D252F9C1D00A828D8 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB3F7C252F9C1D00A828D8 /* MapManager.swift */; };
 		FAE4267225376389005B0E73 /* CustomDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4267125376389005B0E73 /* CustomDeviceCell.swift */; };
 		FAE426742537685A005B0E73 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE426732537685A005B0E73 /* NotesViewController.swift */; };
 		FAE4267625376D5F005B0E73 /* NewNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4267525376D5F005B0E73 /* NewNotesViewController.swift */; };
 		FAE4267825377038005B0E73 /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4267725377038005B0E73 /* NoteModel.swift */; };
+		FAEC5416253E4FB300F9A18A /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC5415253E4FB300F9A18A /* RecentsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0A5E5422408EA9AF4EFD0082 /* Pods-ClinicNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClinicNotes.debug.xcconfig"; path = "Target Support Files/Pods-ClinicNotes/Pods-ClinicNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		64F4855C1D16D7059E76FC28 /* Pods-ClinicNotes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClinicNotes.release.xcconfig"; path = "Target Support Files/Pods-ClinicNotes/Pods-ClinicNotes.release.xcconfig"; sourceTree = "<group>"; };
 		7BEA25B461A3A433226ED4B3 /* Pods_ClinicNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClinicNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA2CBA3E253F0B2D00CB0A28 /* RecentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsModel.swift; sourceTree = "<group>"; };
+		FA2CBA40253F12E900CB0A28 /* CustomRecentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRecentsCell.swift; sourceTree = "<group>"; };
 		FA34B6472535E66500B0A619 /* NewDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceViewController.swift; sourceTree = "<group>"; };
 		FA5622872534E86800DBCFC5 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		FA7952BE25288C0D009D3315 /* ClinicNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClinicNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +72,6 @@
 		FA7952F62528A124009D3315 /* MyRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRef.swift; sourceTree = "<group>"; };
 		FA7952F82528B190009D3315 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA7952FA25292370009D3315 /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
-		FA7952FC25292F9F009D3315 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		FABB3F7A252F73DC00A828D8 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FABB3F7C252F9C1D00A828D8 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		FAE4267125376389005B0E73 /* CustomDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceCell.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		FAE4267525376D5F005B0E73 /* NewNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotesViewController.swift; sourceTree = "<group>"; };
 		FAE4267725377038005B0E73 /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
 		FAE426792537ADC8005B0E73 /* adamwarrenpro-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "adamwarrenpro-bold.ttf"; sourceTree = "<group>"; };
+		FAEC5415253E4FB300F9A18A /* RecentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,13 +137,13 @@
 				FA7952D825288E59009D3315 /* LoginViewController.swift */,
 				FA7952DA25288E96009D3315 /* SignInViewController.swift */,
 				FA7952DC25288EA5009D3315 /* SignUpViewController.swift */,
-				FA7952FC25292F9F009D3315 /* UserProfileVC.swift */,
 				FA7952F0252891DB009D3315 /* ClinicViewController.swift */,
 				FA7952F2252891E8009D3315 /* DetailClinicViewController.swift */,
 				FA7952FA25292370009D3315 /* DevicesViewController.swift */,
 				FA34B6472535E66500B0A619 /* NewDeviceViewController.swift */,
 				FAE426732537685A005B0E73 /* NotesViewController.swift */,
 				FAE4267525376D5F005B0E73 /* NewNotesViewController.swift */,
+				FAEC5415253E4FB300F9A18A /* RecentsViewController.swift */,
 				FABB3F7A252F73DC00A828D8 /* MapViewController.swift */,
 				FA7952EF25289128009D3315 /* Helpers */,
 				FA7952EE25289111009D3315 /* View */,
@@ -161,6 +165,7 @@
 				FA7952E825289092009D3315 /* ClinicModel.swift */,
 				FA5622872534E86800DBCFC5 /* DeviceModel.swift */,
 				FAE4267725377038005B0E73 /* NoteModel.swift */,
+				FA2CBA3E253F0B2D00CB0A28 /* RecentsModel.swift */,
 				FA7952E625289091009D3315 /* CurrentUser.swift */,
 			);
 			path = Models;
@@ -171,6 +176,7 @@
 			children = (
 				FA7952E525289091009D3315 /* CustomTableViewCell.swift */,
 				FAE4267125376389005B0E73 /* CustomDeviceCell.swift */,
+				FA2CBA40253F12E900CB0A28 /* CustomRecentsCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -335,14 +341,16 @@
 				FAE4267225376389005B0E73 /* CustomDeviceCell.swift in Sources */,
 				FA7952F1252891DB009D3315 /* ClinicViewController.swift in Sources */,
 				FA7952F72528A124009D3315 /* MyRef.swift in Sources */,
+				FA2CBA41253F12E900CB0A28 /* CustomRecentsCell.swift in Sources */,
 				FA7952C425288C0D009D3315 /* SceneDelegate.swift in Sources */,
 				FA7952E32528907D009D3315 /* Extansions.swift in Sources */,
 				FABB3F7B252F73DC00A828D8 /* MapViewController.swift in Sources */,
 				FAE426742537685A005B0E73 /* NotesViewController.swift in Sources */,
 				FA7952DB25288E96009D3315 /* SignInViewController.swift in Sources */,
+				FA2CBA3F253F0B2D00CB0A28 /* RecentsModel.swift in Sources */,
 				FAE4267625376D5F005B0E73 /* NewNotesViewController.swift in Sources */,
+				FAEC5416253E4FB300F9A18A /* RecentsViewController.swift in Sources */,
 				FA7952CC25288C0D009D3315 /* ClinicNotes.xcdatamodeld in Sources */,
-				FA7952FD25292F9F009D3315 /* UserProfileVC.swift in Sources */,
 				FA5622882534E86800DBCFC5 /* DeviceModel.swift in Sources */,
 				FABB3F7D252F9C1D00A828D8 /* MapManager.swift in Sources */,
 				FA7952E925289092009D3315 /* ClinicModel.swift in Sources */,

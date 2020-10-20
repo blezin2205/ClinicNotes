@@ -1,0 +1,6 @@
+framework module Pods_ClinicNotes {
+  umbrella header "Pods-ClinicNotes-umbrella.h"
+
+  export *
+  module * { export * }
+}

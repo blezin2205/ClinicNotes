@@ -15,6 +15,9 @@ class CustomDeviceCell: UITableViewCell {
     
     @IBOutlet weak var serialLabel: UILabel!
     
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var updatedLabel: UILabel!
     
+    
+    
+    @IBOutlet weak var createdLabel: UILabel!
 }

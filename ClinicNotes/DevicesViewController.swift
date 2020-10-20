@@ -13,7 +13,7 @@ class DevicesViewController: UITableViewController {
     
     var selectedClinic: FIRClinic?
 
-    
+    let currentUser = Auth.auth().currentUser?.displayName
     var devices = Array<Device>()
     var searchController = UISearchController(searchResultsController: nil)
     
@@ -41,6 +41,9 @@ class DevicesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.tableFooterView = UIView()
+        self.tableView.backgroundColor = .clear
+        setTableViewBackgroundGradient()
 
         
     }
@@ -50,14 +53,23 @@ class DevicesViewController: UITableViewController {
     @IBAction func SaveDevice(_ unwindSegue: UIStoryboardSegue) {
         guard unwindSegue.identifier == "addDevice" else {return}
         guard let source = unwindSegue.source as? NewDeviceViewController else { return }
-        guard let currentUser = Auth.auth().currentUser?.displayName else {return}
-        if let nameofDevice = source.label.text, !nameofDevice.isEmpty {
+        guard let currentUser = currentUser else {return}
+        var serialNumber: String?
+        if !source.serialNumberField.text!.isEmpty {
+            serialNumber = source.serialNumberField.text
+        }
+            if let nameofDevice = source.label.text, !nameofDevice.isEmpty {
             let date = Date()
             let format = DateFormatter()
-            format.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            let timestamp = "\(currentUser), \(format.string(from: date))"
-            let device = Device(name: nameofDevice, serialNumber: source.serialNumberField.text, dateUpdated: timestamp)
-            let deviceRef = self.selectedClinic?.ref?.child("Devices").child(nameofDevice.lowercased())
+            format.dateFormat = "dd/MM/yyyy, HH:mm:ss"
+            
+            let device = Device(name: nameofDevice,
+                                serialNumber: serialNumber,
+                                dateUpdated: nil, updatedBy: nil,
+                                createdBy: currentUser,
+                                dateCreated: format.string(from: date))
+                format.dateFormat = "dd,MM,yyyy,HH:mm:ss"
+                let deviceRef = self.selectedClinic?.ref?.child("Devices").child((nameofDevice.lowercased() + format.string(from: date)))
             deviceRef?.setValue(device.convertToDictionary())
         }
     }
@@ -67,6 +79,7 @@ class DevicesViewController: UITableViewController {
             
             let notecVC = segue.destination as? NotesViewController
             notecVC?.selectedDevice = sender as? Device
+            notecVC?.selectedClinic = selectedClinic
             
         }
     }
@@ -74,6 +87,7 @@ class DevicesViewController: UITableViewController {
     
     // MARK: - Table view data source
 
+   
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,7 +98,11 @@ class DevicesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDeviceCell
         cell.deviceLabel.text = devices[indexPath.row].name
         cell.serialLabel.text = devices[indexPath.row].serialNumder
-        cell.dateLabel.text = "Last update: \(devices[indexPath.row].dateUpdated)" 
+        let user = devices[indexPath.row].createdBy == currentUser ? "You" : devices[indexPath.row].createdBy
+        cell.createdLabel.text = "Created: \(user); \(devices[indexPath.row].dateCreated)"
+        let _updateUser = devices[indexPath.row].updatedBy == currentUser ? "You" : devices[indexPath.row].updatedBy
+        guard let updateUser = _updateUser, let updateDate = devices[indexPath.row].dateUpdated else {return cell}
+        cell.updatedLabel.text = "Last update: \(updateUser); \(updateDate)"
         return cell
     }
     
@@ -94,6 +112,28 @@ class DevicesViewController: UITableViewController {
         
         performSegue(withIdentifier: "showDevice", sender: sender)
     }
+    
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+           cell.backgroundColor = .clear
+       }
+    
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        if editingStyle == .delete {
+            let selectedDevice = devices[indexPath.row]
+            if currentUser == selectedDevice.createdBy {
+                selectedDevice.ref?.removeValue()
+            } else {
+                self.showAlert(title: "Delete denied!", message: "You not created this Device!")
+            
+            }
+            
+        }
+
+    }
+   
     
  
 

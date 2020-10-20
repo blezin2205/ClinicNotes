@@ -12,8 +12,9 @@ import Firebase
 class NotesViewController: UITableViewController {
     
     var selectedDevice: Device?
+    var selectedClinic: FIRClinic?
     var notes = Array<Note>()
-    
+     let currentUser = Auth.auth().currentUser?.displayName
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,27 +37,35 @@ class NotesViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         navigationItem.title = selectedDevice?.name
+        self.tableView.tableFooterView = UIView()
+        self.tableView.backgroundColor = .clear
+        setTableViewBackgroundGradient()
     }
 
  
     
     @IBAction func saveNotes(_ unwindSegue: UIStoryboardSegue) {
-        guard unwindSegue.identifier == "saveNotes" else {return}
+        guard unwindSegue.identifier == "showNote" else {return}
         guard let source = unwindSegue.source as? NewNotesViewController else { return }
         guard let currentUser = Auth.auth().currentUser?.displayName else {return}
         let type = source.segmentControl.titleForSegment(at: source.segmentControl.selectedSegmentIndex)
         let date = Date()
         let format = DateFormatter()
-        format.dateFormat = "dd/MM/yyyy HH:mm:ss"
-        let timestamp = "\(currentUser), \(format.string(from: date))"
-        selectedDevice?.ref?.updateChildValues(["dateUpdated": timestamp])
-        let note = Note(comment: source.noteTextField.text, type: type!, dateUpdated: timestamp, user: currentUser)
+        format.dateFormat = "dd/MM/yyyy, HH:mm:ss"
+        let dateUpdated = format.string(from: date)
+        
+        selectedDevice?.ref?.updateChildValues(["dateUpdated": dateUpdated,
+                                                "updatedBy": currentUser])
+        let note = Note(comment: source.noteTextField.text, type: type!, dateUpdated: dateUpdated, user: currentUser, device: selectedDevice!.name, clinic: selectedClinic!.name, serialNumber: selectedDevice?.serialNumder )
         format.dateFormat = "dd,MM,yyyy,HH:mm:ss"
         let deviceRef = self.selectedDevice?.ref?.child("Notes").child("note: \(format.string(from: date))")
-        deviceRef?.setValue(note.convertToDictionary())
+        if source.incomeSegue == "showNote" {
+            source.updateChildValues(dateUpdated: dateUpdated, currentUser: currentUser)
+        } else {
+            deviceRef?.setValue(note.convertToDictionary())
+        }
         
         
     }
@@ -88,16 +97,23 @@ class NotesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
+        let user = notes[indexPath.row].user == currentUser ? "You" : notes[indexPath.row].user
         cell.textLabel?.text = notes[indexPath.row].comment
+        cell.detailTextLabel?.text = "Last update: \(user); \(notes[indexPath.row].dateUpdated)"
+        cell.detailTextLabel?.textColor = .placeholderText
 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedNote = notes[indexPath.row]
         performSegue(withIdentifier: "showNote", sender: selectedNote)
     }
+
 
 
 

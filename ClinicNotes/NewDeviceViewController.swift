@@ -27,8 +27,9 @@ class NewDeviceViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+        view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         saveButton.isEnabled = false
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "4153735.png")!)
         label.layer.borderColor = UIColor.systemGray.cgColor
         label.layer.borderWidth = 0.8
         label.layer.cornerRadius = 4
@@ -44,6 +45,9 @@ class NewDeviceViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     
     @IBAction func button(_ sender: Any) {
         deviceField.becomeFirstResponder()
+    }
+    @IBAction func cancelButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     

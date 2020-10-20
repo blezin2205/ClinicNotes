@@ -16,13 +16,20 @@ struct Note {
     let type: String
     let user: String
     let dateUpdated: String
+    let device: String
+    let clinic: String
+    let serialNumber: String?
     let ref: DatabaseReference?
     
-    init(comment: String, type: String, dateUpdated: String, user: String) {
+    
+    init(comment: String, type: String, dateUpdated: String, user: String, device: String, clinic: String, serialNumber: String?) {
         self.comment = comment
         self.type = type
         self.user = user
         self.dateUpdated = dateUpdated
+        self.device = device
+        self.clinic = clinic
+        self.serialNumber = serialNumber
         self.ref = nil
         
     }
@@ -35,11 +42,15 @@ struct Note {
         dateUpdated = snapshotValue["dateUpdated"] as! String
         ref = snapshot.ref
         user = snapshotValue["user"] as! String
+        device = snapshotValue["device"] as! String
+        serialNumber = snapshotValue["serialNumder"] as? String
+        clinic = snapshotValue["clinic"] as! String
+        
     }
     
     func convertToDictionary() -> Any {
         
-        return ["comment": comment, "type": type, "dateUpdated": dateUpdated, "user": user ]
+        return ["comment": comment, "type": type, "dateUpdated": dateUpdated, "user": user, "device": device, "serialNumder": serialNumber, "clinic": clinic]
     }
     
     

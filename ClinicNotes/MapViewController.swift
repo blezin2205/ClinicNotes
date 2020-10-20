@@ -100,10 +100,11 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
                                        y: 19,
                                        width: (searchController?.searchBar.frame.width)!,
                                        height: (searchController?.searchBar.frame.height)!))
-        
+        searchController?.searchBar.barTintColor = primaryColor
         searchController?.searchBar.sizeToFit()
         searchController?.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
+        view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         
     }
     

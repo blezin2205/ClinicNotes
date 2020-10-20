@@ -24,8 +24,25 @@ class NewNotesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if incomeSegue == "showNote" {
+        view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
+        saveButton.isEnabled = false
+        noteTextField.delegate = self
+        segmentControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        setupEditScreen()
+
+        print("serial", note?.serialNumber)
+        print(incomeSegue)
+    }
+    
+    private func setupEditScreen() {
+        
+        switch incomeSegue {
+        case "showNote":
             noteTextField.text = note?.comment
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.leftBarButtonItem = nil
+            title = note?.serialNumber ?? note?.device
+            
             if Auth.auth().currentUser?.displayName == note?.user {
                 noteTextField.isEditable = true
                 segmentControl.isEnabled = true
@@ -34,28 +51,62 @@ class NewNotesViewController: UIViewController {
                 segmentControl.isEnabled = false
                 navigationItem.rightBarButtonItem = nil
             }
-            
             let index = note?.type == "Service" ? 0 : 1
             segmentControl.selectedSegmentIndex = index
-            navigationItem.title = serialNumber
-            print(index)
-            print(note?.type)
             
+        case "showRecent":
+            noteTextField.isEditable = false
+            segmentControl.isEnabled = false
+            navigationItem.rightBarButtonItem = nil
+            navigationItem.leftBarButtonItem = nil
+            noteTextField.text = note?.comment
+            navigationController?.navigationBar.prefersLargeTitles = true
+            title = note?.serialNumber ?? note?.device
+            let index = note?.type == "Service" ? 0 : 1
+            segmentControl.selectedSegmentIndex = index
             
+        default:
+            break
         }
-      
+    }
+
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateChildValues(dateUpdated: String, currentUser: String) {
+       
+            note?.ref?.updateChildValues(["comment": noteTextField.text ?? "",
+            "dateUpdated": dateUpdated,
+            "type": segmentControl.titleForSegment(at: segmentControl.selectedSegmentIndex)!,
+            "user": currentUser])
+        
     }
-    */
 
+}
+
+extension NewNotesViewController: UITextViewDelegate {
+    
+
+    func textViewDidChange(_ textView: UITextView) {
+        
+        if noteTextField.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false {
+                  saveButton.isEnabled = true
+              } else {
+                  saveButton.isEnabled = false
+              }
+    }
+    
+    @objc private func segmentChanged() {
+          
+        if noteTextField.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false {
+            saveButton.isEnabled = true
+        } else {
+            saveButton.isEnabled = false
+        }
+       
+      }
+  
 }
