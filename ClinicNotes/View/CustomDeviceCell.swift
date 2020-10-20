@@ -12,12 +12,7 @@ import UIKit
 class CustomDeviceCell: UITableViewCell {
 
     @IBOutlet weak var deviceLabel: UILabel!
-    
     @IBOutlet weak var serialLabel: UILabel!
-    
     @IBOutlet weak var updatedLabel: UILabel!
-    
-    
-    
     @IBOutlet weak var createdLabel: UILabel!
 }

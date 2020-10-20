@@ -30,8 +30,6 @@ class NewNotesViewController: UIViewController {
         segmentControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
         setupEditScreen()
 
-        print("serial", note?.serialNumber)
-        print(incomeSegue)
     }
     
     private func setupEditScreen() {

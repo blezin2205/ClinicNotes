@@ -139,7 +139,7 @@ class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomClinicCell
  
         let clinic = isFiltering ? filteredClinics[indexPath.row] : clinics[indexPath.row]
         
@@ -163,7 +163,7 @@ class ClinicViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     
      func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
+        let cell = tableView.cellForRow(at: indexPath) as! CustomClinicCell
         let cellImage = cell.imageOfClinic.image
         let selectedClinic = isFiltering ? filteredClinics[indexPath.row] as FIRClinic : clinics[indexPath.row] as FIRClinic
         performSegue(withIdentifier: "edit", sender: (cellImage, selectedClinic))

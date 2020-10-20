@@ -1,6 +1,6 @@
 //
 //  ClinicModel.swift
-//  My Labix
+//  ClinicNotes
 //
 //  Created by Alex Stepanov on 21.04.2020.
 //  Copyright © 2020 Alex Stepanov. All rights reserved.
@@ -20,6 +20,7 @@ struct FIRClinic {
     var latitude: String?
     
     init(name: String, location: String?, city: String?, image: String?, userId: String, longitude: String?, latitude: String?) {
+        
         self.name = name
         self.location = location
         self.city = city
@@ -43,7 +44,6 @@ struct FIRClinic {
     }
     
     func convertToDictionary() -> Any {
- 
         return ["name": name, "location": location as Any, "city": city as Any, "image": image as Any, "userId": userId, "longitude": longitude as Any, "latitude": latitude as Any]
     }
 }

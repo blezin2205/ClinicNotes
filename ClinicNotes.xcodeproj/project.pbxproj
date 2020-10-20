@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		12B05E606A40542EE9F06165 /* Pods_ClinicNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BEA25B461A3A433226ED4B3 /* Pods_ClinicNotes.framework */; };
-		FA2CBA3F253F0B2D00CB0A28 /* RecentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2CBA3E253F0B2D00CB0A28 /* RecentsModel.swift */; };
 		FA2CBA41253F12E900CB0A28 /* CustomRecentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2CBA40253F12E900CB0A28 /* CustomRecentsCell.swift */; };
+		FA2CBA43253F930B00CB0A28 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2CBA42253F930B00CB0A28 /* UserProfile.swift */; };
 		FA34B6482535E66500B0A619 /* NewDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34B6472535E66500B0A619 /* NewDeviceViewController.swift */; };
 		FA5622882534E86800DBCFC5 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5622872534E86800DBCFC5 /* DeviceModel.swift */; };
 		FA7952C225288C0D009D3315 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952C125288C0D009D3315 /* AppDelegate.swift */; };
@@ -23,12 +23,9 @@
 		FA7952DD25288EA5009D3315 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952DC25288EA5009D3315 /* SignUpViewController.swift */; };
 		FA7952E32528907D009D3315 /* Extansions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952E22528907D009D3315 /* Extansions.swift */; };
 		FA7952E925289092009D3315 /* ClinicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952E825289092009D3315 /* ClinicModel.swift */; };
-		FA7952EA25289092009D3315 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952E525289091009D3315 /* CustomTableViewCell.swift */; };
-		FA7952EB25289092009D3315 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952E725289092009D3315 /* UserProfile.swift */; };
-		FA7952EC25289092009D3315 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952E625289091009D3315 /* CurrentUser.swift */; };
+		FA7952EA25289092009D3315 /* CustomClinicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952E525289091009D3315 /* CustomClinicCell.swift */; };
 		FA7952F1252891DB009D3315 /* ClinicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F0252891DB009D3315 /* ClinicViewController.swift */; };
 		FA7952F3252891E8009D3315 /* DetailClinicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F2252891E8009D3315 /* DetailClinicViewController.swift */; };
-		FA7952F525289511009D3315 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F425289511009D3315 /* FirebaseManager.swift */; };
 		FA7952F72528A124009D3315 /* MyRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F62528A124009D3315 /* MyRef.swift */; };
 		FA7952F92528B190009D3315 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA7952F82528B190009D3315 /* GoogleService-Info.plist */; };
 		FA7952FB25292370009D3315 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952FA25292370009D3315 /* DevicesViewController.swift */; };
@@ -45,8 +42,8 @@
 		0A5E5422408EA9AF4EFD0082 /* Pods-ClinicNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClinicNotes.debug.xcconfig"; path = "Target Support Files/Pods-ClinicNotes/Pods-ClinicNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		64F4855C1D16D7059E76FC28 /* Pods-ClinicNotes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClinicNotes.release.xcconfig"; path = "Target Support Files/Pods-ClinicNotes/Pods-ClinicNotes.release.xcconfig"; sourceTree = "<group>"; };
 		7BEA25B461A3A433226ED4B3 /* Pods_ClinicNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClinicNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA2CBA3E253F0B2D00CB0A28 /* RecentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsModel.swift; sourceTree = "<group>"; };
 		FA2CBA40253F12E900CB0A28 /* CustomRecentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRecentsCell.swift; sourceTree = "<group>"; };
+		FA2CBA42253F930B00CB0A28 /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		FA34B6472535E66500B0A619 /* NewDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceViewController.swift; sourceTree = "<group>"; };
 		FA5622872534E86800DBCFC5 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		FA7952BE25288C0D009D3315 /* ClinicNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClinicNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,14 +58,10 @@
 		FA7952DA25288E96009D3315 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		FA7952DC25288EA5009D3315 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		FA7952E22528907D009D3315 /* Extansions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extansions.swift; sourceTree = "<group>"; };
-		FA7952E425289084009D3315 /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
-		FA7952E525289091009D3315 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		FA7952E625289091009D3315 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
-		FA7952E725289092009D3315 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		FA7952E525289091009D3315 /* CustomClinicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomClinicCell.swift; sourceTree = "<group>"; };
 		FA7952E825289092009D3315 /* ClinicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicModel.swift; sourceTree = "<group>"; };
 		FA7952F0252891DB009D3315 /* ClinicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicViewController.swift; sourceTree = "<group>"; };
 		FA7952F2252891E8009D3315 /* DetailClinicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClinicViewController.swift; sourceTree = "<group>"; };
-		FA7952F425289511009D3315 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		FA7952F62528A124009D3315 /* MyRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRef.swift; sourceTree = "<group>"; };
 		FA7952F82528B190009D3315 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA7952FA25292370009D3315 /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
@@ -78,7 +71,6 @@
 		FAE426732537685A005B0E73 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		FAE4267525376D5F005B0E73 /* NewNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotesViewController.swift; sourceTree = "<group>"; };
 		FAE4267725377038005B0E73 /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
-		FAE426792537ADC8005B0E73 /* adamwarrenpro-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "adamwarrenpro-bold.ttf"; sourceTree = "<group>"; };
 		FAEC5415253E4FB300F9A18A /* RecentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -161,12 +153,10 @@
 		FA7952ED252890D9009D3315 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FA7952E725289092009D3315 /* UserProfile.swift */,
+				FA2CBA42253F930B00CB0A28 /* UserProfile.swift */,
 				FA7952E825289092009D3315 /* ClinicModel.swift */,
 				FA5622872534E86800DBCFC5 /* DeviceModel.swift */,
 				FAE4267725377038005B0E73 /* NoteModel.swift */,
-				FA2CBA3E253F0B2D00CB0A28 /* RecentsModel.swift */,
-				FA7952E625289091009D3315 /* CurrentUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -174,7 +164,7 @@
 		FA7952EE25289111009D3315 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FA7952E525289091009D3315 /* CustomTableViewCell.swift */,
+				FA7952E525289091009D3315 /* CustomClinicCell.swift */,
 				FAE4267125376389005B0E73 /* CustomDeviceCell.swift */,
 				FA2CBA40253F12E900CB0A28 /* CustomRecentsCell.swift */,
 			);
@@ -185,11 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				FA7952E22528907D009D3315 /* Extansions.swift */,
-				FA7952F425289511009D3315 /* FirebaseManager.swift */,
 				FA7952F62528A124009D3315 /* MyRef.swift */,
 				FABB3F7C252F9C1D00A828D8 /* MapManager.swift */,
-				FAE426792537ADC8005B0E73 /* adamwarrenpro-bold.ttf */,
-				FA7952E425289084009D3315 /* Pacifico.ttf */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -329,12 +316,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAE4267825377038005B0E73 /* NoteModel.swift in Sources */,
-				FA7952EA25289092009D3315 /* CustomTableViewCell.swift in Sources */,
+				FA7952EA25289092009D3315 /* CustomClinicCell.swift in Sources */,
 				FA7952DD25288EA5009D3315 /* SignUpViewController.swift in Sources */,
-				FA7952F525289511009D3315 /* FirebaseManager.swift in Sources */,
 				FA7952F3252891E8009D3315 /* DetailClinicViewController.swift in Sources */,
-				FA7952EC25289092009D3315 /* CurrentUser.swift in Sources */,
-				FA7952EB25289092009D3315 /* UserProfile.swift in Sources */,
 				FA7952D925288E59009D3315 /* LoginViewController.swift in Sources */,
 				FA7952C225288C0D009D3315 /* AppDelegate.swift in Sources */,
 				FA7952FB25292370009D3315 /* DevicesViewController.swift in Sources */,
@@ -347,12 +331,12 @@
 				FABB3F7B252F73DC00A828D8 /* MapViewController.swift in Sources */,
 				FAE426742537685A005B0E73 /* NotesViewController.swift in Sources */,
 				FA7952DB25288E96009D3315 /* SignInViewController.swift in Sources */,
-				FA2CBA3F253F0B2D00CB0A28 /* RecentsModel.swift in Sources */,
 				FAE4267625376D5F005B0E73 /* NewNotesViewController.swift in Sources */,
 				FAEC5416253E4FB300F9A18A /* RecentsViewController.swift in Sources */,
 				FA7952CC25288C0D009D3315 /* ClinicNotes.xcdatamodeld in Sources */,
 				FA5622882534E86800DBCFC5 /* DeviceModel.swift in Sources */,
 				FABB3F7D252F9C1D00A828D8 /* MapManager.swift in Sources */,
+				FA2CBA43253F930B00CB0A28 /* UserProfile.swift in Sources */,
 				FA7952E925289092009D3315 /* ClinicModel.swift in Sources */,
 				FA34B6482535E66500B0A619 /* NewDeviceViewController.swift in Sources */,
 			);

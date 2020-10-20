@@ -9,7 +9,7 @@
 import UIKit
 
 
-class CustomTableViewCell: UITableViewCell {
+class CustomClinicCell: UITableViewCell {
     
     @IBOutlet var imageOfClinic: UIImageView! {
         didSet {
@@ -17,9 +17,7 @@ class CustomTableViewCell: UITableViewCell {
             imageOfClinic.clipsToBounds = true
         }
     }
-    
-    
-      
+
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!

@@ -15,5 +15,4 @@ class CustomRecentsCell: UITableViewCell {
     @IBOutlet weak var clinicNameLabel: UILabel!
     @IBOutlet weak var userDateLabel: UILabel!
     
-    
 }

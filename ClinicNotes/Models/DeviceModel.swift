@@ -19,8 +19,8 @@ struct Device {
     let createdBy: String
     let ref: DatabaseReference?
     
-    
     init(name: String, serialNumber: String?, dateUpdated: String?, updatedBy: String?, createdBy: String, dateCreated: String) {
+        
         self.name = name
         self.serialNumder = serialNumber
         self.dateUpdated = dateUpdated
@@ -29,7 +29,6 @@ struct Device {
         self.dateCreated = dateCreated
         self.ref = nil
     }
-    
     
     init(snapshot: DataSnapshot) {
         
@@ -43,10 +42,7 @@ struct Device {
         ref = snapshot.ref
     }
     
-     func convertToDictionary() -> Any {
-    
+    func convertToDictionary() -> Any {
         return ["name": name, "serialNumder": serialNumder, "dateUpdated": dateUpdated, "updatedBy": updatedBy, "createdBy": createdBy, "dateCreated": dateCreated ]
-       }
-    
-    
+    }
 }

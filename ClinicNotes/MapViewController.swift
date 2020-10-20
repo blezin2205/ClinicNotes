@@ -14,7 +14,6 @@ import Alamofire
 import SwiftyJSON
 import Firebase
 
-
 protocol MapViewControllerDelegate {
     func getAddress(_ address: String?, _ city: String?, _ longitude: String?, _ latitude: String?)
 }

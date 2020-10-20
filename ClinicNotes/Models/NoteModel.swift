@@ -11,7 +11,6 @@ import Firebase
 
 struct Note {
     
-    
     let comment: String
     let type: String
     let user: String
@@ -21,8 +20,8 @@ struct Note {
     let serialNumber: String?
     let ref: DatabaseReference?
     
-    
     init(comment: String, type: String, dateUpdated: String, user: String, device: String, clinic: String, serialNumber: String?) {
+        
         self.comment = comment
         self.type = type
         self.user = user
@@ -49,11 +48,6 @@ struct Note {
     }
     
     func convertToDictionary() -> Any {
-        
         return ["comment": comment, "type": type, "dateUpdated": dateUpdated, "user": user, "device": device, "serialNumder": serialNumber, "clinic": clinic]
     }
-    
-    
-    
-    
 }
