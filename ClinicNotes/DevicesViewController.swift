@@ -11,7 +11,7 @@ import Firebase
 
 class DevicesViewController: UITableViewController {
     
-    var selectedClinic: FIRClinic?
+    var selectedClinic: Clinic?
 
     let currentUser = Auth.auth().currentUser?.displayName
     var devices = Array<Device>()
@@ -68,8 +68,8 @@ class DevicesViewController: UITableViewController {
                                 dateUpdated: nil, updatedBy: nil,
                                 createdBy: currentUser,
                                 dateCreated: format.string(from: date))
-                format.dateFormat = "dd,MM,yyyy,HH:mm:ss"
-                let deviceRef = self.selectedClinic?.ref?.child("Devices").child((nameofDevice.lowercased() + format.string(from: date)))
+                
+            let deviceRef = self.selectedClinic?.ref?.child("Devices").childByAutoId()
             deviceRef?.setValue(device.convertToDictionary())
         }
     }
@@ -98,11 +98,11 @@ class DevicesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDeviceCell
         cell.deviceLabel.text = devices[indexPath.row].name
         cell.serialLabel.text = devices[indexPath.row].serialNumder
-        let user = devices[indexPath.row].createdBy == currentUser ? "You" : devices[indexPath.row].createdBy
-        cell.createdLabel.text = "Created: \(user); \(devices[indexPath.row].dateCreated)"
+        let user = devices[indexPath.row].createdBy == currentUser ? NSLocalizedString("You", comment: "") : devices[indexPath.row].createdBy
+        cell.createdLabel.text = "\(NSLocalizedString("Created by", comment: "")): \(user); \(devices[indexPath.row].dateCreated)"
         let _updateUser = devices[indexPath.row].updatedBy == currentUser ? "You" : devices[indexPath.row].updatedBy
         guard let updateUser = _updateUser, let updateDate = devices[indexPath.row].dateUpdated else {return cell}
-        cell.updatedLabel.text = "Last update: \(updateUser); \(updateDate)"
+        cell.updatedLabel.text = "\(NSLocalizedString("Last update", comment: "")): \(updateUser); \(updateDate)"
         return cell
     }
     
@@ -118,6 +118,19 @@ class DevicesViewController: UITableViewController {
            cell.backgroundColor = .clear
        }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "\(NSLocalizedString("Please add first device for", comment: "")) \(selectedClinic!.name)"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return devices.count > 0 ? 0 : 250
+    }
+    
+    
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
@@ -126,7 +139,7 @@ class DevicesViewController: UITableViewController {
             if currentUser == selectedDevice.createdBy {
                 selectedDevice.ref?.removeValue()
             } else {
-                self.showAlert(title: "Delete denied!", message: "You not created this Device!")
+                self.showAlert(title: NSLocalizedString("Delete denied!", comment: ""), message: NSLocalizedString("You not created this Device!", comment: ""))
             
             }
             

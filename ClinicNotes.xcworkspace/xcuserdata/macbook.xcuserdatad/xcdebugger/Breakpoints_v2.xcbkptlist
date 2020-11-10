@@ -14,8 +14,8 @@
             filePath = "ClinicNotes/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
             <Locations>
