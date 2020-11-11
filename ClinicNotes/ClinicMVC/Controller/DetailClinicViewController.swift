@@ -11,17 +11,14 @@ import CoreData
 import Firebase
 import FirebaseStorage
 
-class DetailViewController: UITableViewController {
-    
+class DetailViewController: UITableViewController, DetailClinicTextFieldDelegate {
 
-    var selectedClinic: (image: UIImage, clinic: FIRClinic)?
-    var ref: DatabaseReference?
-    
+    var selectedClinic: (image: UIImage, clinic: Clinic)?
     var imageIsChanged = false
     var longitude: String?
     var latitude: String?
     var incomeSegue = ""
-    
+    private let clinicNetworkService: ClinicNetworkServiceDelegate = ClinicNetworkService()
 
     @IBOutlet weak var clinicImage: UIImageView!
     @IBOutlet weak var clinicName: UITextField!
@@ -30,13 +27,13 @@ class DetailViewController: UITableViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var showAddress: UIButton!
     @IBOutlet weak var getAddress: UIButton!
-    
     @IBOutlet weak var createdByLabel: UILabel!
     
+    var image: UIImage? { return clinicImage.image }
+    var name: String { return clinicName.text! }
+    var location: String? { return clinicLocation.text }
+    var city: String? { return clinicCity.text }
     
-    override func viewWillAppear(_ animated: Bool) {
-         
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +41,9 @@ class DetailViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.backgroundColor = .clear
         setTableViewBackgroundGradient()
-        
-        ref = MyRef.reference
-        
+
         if incomeSegue == "edit" {
-            createdByLabel.text = "created by \(selectedClinic!.clinic.userId )"
+            createdByLabel.text = "\(NSLocalizedString("created by", comment: "")): \(selectedClinic!.clinic.userId )"
             createdByLabel.font = .italicSystemFont(ofSize: 13)
         }
        
@@ -71,7 +66,7 @@ class DetailViewController: UITableViewController {
         let latitude = self.latitude != nil ?  self.latitude :  selectedClinic?.clinic.latitude
         let longitude = self.longitude != nil ?  self.longitude :  selectedClinic?.clinic.longitude
         guard let _latitude = latitude, let _longitude = longitude else {
-            self.showAlert(title: "Error", message: "Location not exist or empty")
+            self.showAlert(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Location not exist or empty", comment: ""))
             return }
         
       if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
@@ -81,7 +76,6 @@ class DetailViewController: UITableViewController {
         self.showAlert(title: "GoogleMaps", message: "Can't use comgooglemaps://")
           
       }
-
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -89,73 +83,10 @@ class DetailViewController: UITableViewController {
         guard let mapVC = segue.destination as? GooglemapVC else { return }
         mapVC.mapViewControllerDelegate = self
         mapVC.clinic = selectedClinic?.clinic
-        print("to googlemap")
     }
 
-    
-    func uploadPhoto(completion: @escaping (_ url: String)->()) {
-        
-        guard let image = clinicImage.image, let data = image.jpegData(compressionQuality: 0.5) else {return}
-        
-        let imageName = UUID().uuidString
-        
-        let imageReference = Storage.storage().reference().child("MyPhoto").child(imageName)
-        
-        
-        imageReference.putData(data, metadata: nil) { (metadata, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            imageReference.downloadURL { (url, error) in
-                guard let url = url, error == nil else {return}
-                
-                let urlString = url.absoluteString
-                print("DOwnload URL", urlString)
-                completion(urlString)
-            }
-        }
-        
-    }
-    
-    
     func saveClinicIntoFirebase() {
-        
-        if selectedClinic != nil {
-            
-            selectedClinic?.clinic.ref?.updateChildValues(["name": clinicName.text!,
-                                                           "location": clinicLocation.text ?? "",
-                                                           "city": clinicCity.text ?? ""])
-            
-            if imageIsChanged {
-                DispatchQueue.main.async {
-                    self.uploadPhoto { (url) in
-                        self.selectedClinic?.clinic.ref?.updateChildValues(["image": url])
-                    }
-                }
-            }
-            
-            
-        } else {
-            
-            let user = Auth.auth().currentUser?.displayName
-            let firClinic = FIRClinic.init(name: clinicName.text!,
-                                           location: clinicLocation.text,
-                                           city: clinicCity.text, image: nil,
-                                           userId: user ?? "",
-                                           longitude: longitude, latitude: latitude)
-            MyRef.reference?.child(clinicName.text!).setValue(firClinic.convertToDictionary())
-            
-            if imageIsChanged {
-                DispatchQueue.main.async {
-                    self.uploadPhoto { (url) in
-                        self.ref?.child(self.clinicName.text!).updateChildValues(["image": url])
-                    }
-                }
-            }
-            
-        }
-        
+        clinicNetworkService.saveClinicIntoFirebase(imageIsChanged: imageIsChanged, selectedClinic: selectedClinic?.clinic, textField: self)
     }
     
     
@@ -199,21 +130,21 @@ class DetailViewController: UITableViewController {
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
             
-            let camera = UIAlertAction(title: "Camera", style: .default) { _ in
+            let camera = UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .default) { _ in
                 self.chooseImagePicker(source: .camera)
             }
             
             camera.setValue(cameraIcon, forKey: "image")
             camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
-            let photo = UIAlertAction(title: "Photo", style: .default) { _ in
+            let photo = UIAlertAction(title: NSLocalizedString("Photo", comment: ""), style: .default) { _ in
                 self.chooseImagePicker(source: .photoLibrary)
             }
             
             photo.setValue(photoIcon, forKey: "image")
             photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
             
             actionSheet.addAction(camera)
             actionSheet.addAction(photo)

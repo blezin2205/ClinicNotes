@@ -9,7 +9,12 @@
 import UIKit
 import Firebase
 
-struct FIRClinic {
+
+
+
+struct Clinic {
+  
+    
     var name: String
     var location: String?
     var city: String?
@@ -47,3 +52,4 @@ struct FIRClinic {
         return ["name": name, "location": location as Any, "city": city as Any, "image": image as Any, "userId": userId, "longitude": longitude as Any, "latitude": latitude as Any]
     }
 }
+

@@ -13,65 +13,39 @@ class DevicesViewController: UITableViewController {
     
     var selectedClinic: Clinic?
 
+    private let deviceNetworkService: DeviceNetworkServiceDelegate = DeviceNetworkService()
     let currentUser = Auth.auth().currentUser?.displayName
     var devices = Array<Device>()
     var searchController = UISearchController(searchResultsController: nil)
+    var deviceRef: DatabaseReference?
     
     
     override func viewWillAppear(_ animated: Bool) {
         
-        
-        selectedClinic?.ref?.child("Devices").observe(.value, with: { (snapshot) in
-            var _devices = Array<Device>()
-            for item in snapshot.children {
-                let device = Device(snapshot: item as! DataSnapshot)
-                _devices.append(device)
-            }
-            self.devices = _devices
+        deviceNetworkService.getDeviceSnapshot(deviceRef: deviceRef) { (deviceResponse) in
+            self.devices = deviceResponse.devices
             self.tableView.reloadData()
-            
-        })
-        
+        }
     }
     
-    
-    
-    
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        deviceRef?.removeAllObservers()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.tableFooterView = UIView()
         self.tableView.backgroundColor = .clear
         setTableViewBackgroundGradient()
-
-        
+        deviceRef = selectedClinic?.ref?.child("Devices")
     }
 
     
     
     @IBAction func SaveDevice(_ unwindSegue: UIStoryboardSegue) {
-        guard unwindSegue.identifier == "addDevice" else {return}
-        guard let source = unwindSegue.source as? NewDeviceViewController else { return }
-        guard let currentUser = currentUser else {return}
-        var serialNumber: String?
-        if !source.serialNumberField.text!.isEmpty {
-            serialNumber = source.serialNumberField.text
-        }
-            if let nameofDevice = source.label.text, !nameofDevice.isEmpty {
-            let date = Date()
-            let format = DateFormatter()
-            format.dateFormat = "dd/MM/yyyy, HH:mm:ss"
-            
-            let device = Device(name: nameofDevice,
-                                serialNumber: serialNumber,
-                                dateUpdated: nil, updatedBy: nil,
-                                createdBy: currentUser,
-                                dateCreated: format.string(from: date))
-                
-            let deviceRef = self.selectedClinic?.ref?.child("Devices").childByAutoId()
-            deviceRef?.setValue(device.convertToDictionary())
-        }
+        deviceNetworkService.unwindSaveDeviceForSelectedClinic(currentUser: currentUser, unwindSegue: unwindSegue, deviceRef: deviceRef)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,11 +57,6 @@ class DevicesViewController: UITableViewController {
             
         }
     }
-    
-    
-    // MARK: - Table view data source
-
-   
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -96,13 +65,9 @@ class DevicesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDeviceCell
-        cell.deviceLabel.text = devices[indexPath.row].name
-        cell.serialLabel.text = devices[indexPath.row].serialNumder
-        let user = devices[indexPath.row].createdBy == currentUser ? NSLocalizedString("You", comment: "") : devices[indexPath.row].createdBy
-        cell.createdLabel.text = "\(NSLocalizedString("Created by", comment: "")): \(user); \(devices[indexPath.row].dateCreated)"
-        let _updateUser = devices[indexPath.row].updatedBy == currentUser ? "You" : devices[indexPath.row].updatedBy
-        guard let updateUser = _updateUser, let updateDate = devices[indexPath.row].dateUpdated else {return cell}
-        cell.updatedLabel.text = "\(NSLocalizedString("Last update", comment: "")): \(updateUser); \(updateDate)"
+        let device = devices[indexPath.row]
+        cell.set(currentUser: currentUser, device: device)
+
         return cell
     }
     
@@ -130,8 +95,6 @@ class DevicesViewController: UITableViewController {
         return devices.count > 0 ? 0 : 250
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == .delete {
@@ -146,9 +109,5 @@ class DevicesViewController: UITableViewController {
         }
 
     }
-   
-    
- 
-
 
 }

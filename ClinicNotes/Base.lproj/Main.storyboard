@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sDI-JD-DP0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="-1007.2" y="85.907046476761622"/>
         </scene>
-        <!--Recents-->
+        <!--Recent notes-->
         <scene sceneID="nAf-Zf-E28">
             <objects>
-                <tableViewController id="MLx-13-eCd" customClass="RecentsViewController" customModule="ClinicNotes" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RecentsViewController" id="MLx-13-eCd" customClass="RecentsViewController" customModule="ClinicNotes" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Z20-vB-rCx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -107,14 +107,14 @@
                             <outlet property="delegate" destination="MLx-13-eCd" id="cKy-dM-weO"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Recents" id="fR9-32-Oas"/>
+                    <navigationItem key="navigationItem" title="Recent notes" id="fR9-32-Oas"/>
                     <connections>
                         <segue destination="Lfp-Z0-SPt" kind="show" identifier="showRecent" id="kx5-Ir-S69"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAA-1J-div" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-162" y="1585"/>
+            <point key="canvasLocation" x="596" y="1624"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="YNF-BH-pFA">
@@ -664,7 +664,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cip-Td-8z4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fzj-BU-D2I" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2261.5999999999999" y="82.3088455772114"/>
+            <point key="canvasLocation" x="2345" y="87"/>
         </scene>
         <!--GooglemapVC-->
         <scene sceneID="AU2-nf-tRO">
@@ -694,7 +694,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUs-Gt-6kh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3214" y="87"/>
+            <point key="canvasLocation" x="3238" y="81"/>
         </scene>
         <!--Clinics-->
         <scene sceneID="rYJ-aI-QpY">
@@ -708,7 +708,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="120" id="7bf-ln-yrH" customClass="CustomClinicCell" customModule="ClinicNotes" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomClinicCell" rowHeight="120" id="7bf-ln-yrH" customClass="CustomClinicCell" customModule="ClinicNotes" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7bf-ln-yrH" id="jNi-Zj-Jvw">
@@ -765,12 +765,6 @@
                                                 <constraint firstItem="cCb-7o-WFJ" firstAttribute="leading" secondItem="pvk-OK-D0m" secondAttribute="trailing" constant="8" id="wD2-od-Rnx"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="cityLabel" destination="Y0O-mY-Zf0" id="l25-H4-CtV"/>
-                                            <outlet property="imageOfClinic" destination="pvk-OK-D0m" id="gFn-RI-37S"/>
-                                            <outlet property="locationLabel" destination="cCb-7o-WFJ" id="Jh2-oO-Cs0"/>
-                                            <outlet property="nameLabel" destination="nCL-j2-v9E" id="Ktb-gv-GbW"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -900,7 +894,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Enx-az-ha6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1449" y="845"/>
+            <point key="canvasLocation" x="1409" y="842"/>
         </scene>
         <!--Notes View Controller-->
         <scene sceneID="vzt-zJ-5KZ">
@@ -955,7 +949,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pz4-or-iZC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1449" y="1625"/>
+            <point key="canvasLocation" x="1409" y="1623"/>
         </scene>
         <!--New Note-->
         <scene sceneID="Vg2-P0-VFl">
@@ -1017,7 +1011,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a2F-S6-RiQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="evV-gY-XNR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4220" y="1585.4572713643179"/>
+            <point key="canvasLocation" x="3238" y="1623"/>
         </scene>
         <!--New Device-->
         <scene sceneID="ICQ-tQ-ixR">
@@ -1100,7 +1094,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uXF-hr-prU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Eua-NU-tt6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4220" y="845.1274362818591"/>
+            <point key="canvasLocation" x="3238" y="842"/>
         </scene>
         <!--Clinics-->
         <scene sceneID="xSm-sN-3Gq">
@@ -1111,7 +1105,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="23"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -1139,7 +1133,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eI3-mn-1QX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2263" y="-620"/>
+            <point key="canvasLocation" x="2345" y="-647"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nfx-m2-csi">
@@ -1158,7 +1152,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dkd-u1-zb8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3214" y="1585"/>
+            <point key="canvasLocation" x="2346" y="1623"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RDy-L0-ggK">
@@ -1177,7 +1171,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ve-j2-2cA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3214" y="842"/>
+            <point key="canvasLocation" x="2345" y="845"/>
         </scene>
         <!--Recents-->
         <scene sceneID="G6x-Of-V71">
@@ -1188,6 +1182,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Fut-f2-4lN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1196,7 +1193,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NYH-bv-JzZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-162" y="845"/>
+            <point key="canvasLocation" x="596" y="842"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

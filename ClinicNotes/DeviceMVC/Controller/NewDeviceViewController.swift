@@ -11,8 +11,6 @@ import Firebase
 
 class NewDeviceViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    
-    
     @IBOutlet weak var deviceField: UITextField!
     @IBOutlet weak var serialNumberField: UITextField!
     
@@ -26,21 +24,8 @@ class NewDeviceViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
-        view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
-        saveButton.isEnabled = false
-        label.layer.borderColor = UIColor.systemGray.cgColor
-        label.layer.borderWidth = 0.8
-        label.layer.cornerRadius = 4
-        label.layer.masksToBounds = true
-        picker = UIPickerView()
-        picker?.delegate = self
-        deviceField.inputView = picker
-        deviceField.isHidden = true
-        view.bringSubviewToFront(label)
-        createToolBar()
 
+        setupView()
     }
     
     @IBAction func button(_ sender: Any) {
@@ -50,12 +35,28 @@ class NewDeviceViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         dismiss(animated: true, completion: nil)
     }
     
+    private func setupView() {
+
+         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
+         saveButton.isEnabled = false
+         label.layer.borderColor = UIColor.systemGray.cgColor
+         label.layer.borderWidth = 0.8
+         label.layer.cornerRadius = 4
+         label.layer.masksToBounds = true
+         picker = UIPickerView()
+         picker?.delegate = self
+         deviceField.inputView = picker
+         deviceField.isHidden = true
+         view.bringSubviewToFront(label)
+         createToolBar()
+
+    }
     
     func createToolBar() {
         
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissKeyboard))
+        let doneButton = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: .plain, target: self, action: #selector(dismissKeyboard))
         toolBar.setItems([doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         deviceField.inputAccessoryView = toolBar

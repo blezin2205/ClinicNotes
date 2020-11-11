@@ -1,0 +1,141 @@
+
+/* Class = "UINavigationItem"; title = "Clinics"; ObjectID = "05k-am-Zv6"; */
+"05k-am-Zv6.title" = "Заклади";
+
+/* Class = "UILabel"; text = "Device"; ObjectID = "1e4-5q-Bk9"; */
+"1e4-5q-Bk9.text" = "Прилад";
+
+/* Class = "UILabel"; text = "PASSWORD"; ObjectID = "1ef-Hv-xsH"; */
+"1ef-Hv-xsH.text" = "Пароль";
+
+/* Class = "UILabel"; text = "PASSWORD"; ObjectID = "5r9-d5-PRh"; */
+"5r9-d5-PRh.text" = "Пароль";
+
+/* Class = "UILabel"; text = "CONFIRM PASSWORD"; ObjectID = "7OZ-28-zKh"; */
+"7OZ-28-zKh.text" = "Повторити пароль";
+
+/* Class = "UITabBarItem"; title = "Clinics"; ObjectID = "7Ux-9Z-aXE"; */
+"7Ux-9Z-aXE.title" = "Заклади";
+
+/* Class = "UINavigationItem"; title = "New Clinic"; ObjectID = "86M-Fj-10E"; */
+"86M-Fj-10E.title" = "Новий заклад";
+
+/* Class = "UINavigationItem"; title = "New Note"; ObjectID = "8ev-0E-EWB"; */
+"8ev-0E-EWB.title" = "Нова замітка";
+
+/* Class = "UILabel"; text = "EMAIL"; ObjectID = "8kx-Ud-1t4"; */
+"8kx-Ud-1t4.text" = "Пошта";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "AOV-sm-Zhh"; */
+"AOV-sm-Zhh.text" = "Деталі";
+
+/* Class = "UILabel"; text = "City"; ObjectID = "B7p-nc-2i5"; */
+"B7p-nc-2i5.text" = "Місто";
+
+/* Class = "UILabel"; text = "Sign In"; ObjectID = "Brh-8c-dSO"; */
+"Brh-8c-dSO.text" = "Вхід";
+
+/* Class = "UINavigationItem"; title = "Devices"; ObjectID = "F4G-FO-Hph"; */
+"F4G-FO-Hph.title" = "Прилади";
+
+/* Class = "UITextField"; placeholder = "Clinic name"; ObjectID = "Fum-2A-GJy"; */
+"Fum-2A-GJy.placeholder" = "Назва закладу";
+
+/* Class = "UILabel"; text = "comment"; ObjectID = "GGU-Sx-qdl"; */
+"GGU-Sx-qdl.text" = "Замітка";
+
+/* Class = "UIBarButtonItem"; title = "Log Out"; ObjectID = "Guc-n9-3kX"; */
+"Guc-n9-3kX.title" = "Вихід";
+
+/* Class = "UILabel"; text = "clinic name"; ObjectID = "KDJ-gp-gbP"; */
+"KDJ-gp-gbP.text" = "Назва закладу";
+
+/* Class = "UITextField"; placeholder = "City from map (can edit)"; ObjectID = "Lk8-Lb-YGv"; */
+"Lk8-Lb-YGv.placeholder" = "Місто з карти (можна редагувати)";
+
+/* Class = "UILabel"; text = "user added + data"; ObjectID = "LlO-GW-k79"; */
+"LlO-GW-k79.text" = "user added + data";
+
+/* Class = "UIViewController"; title = "Sign In"; ObjectID = "Lnl-aY-5KV"; */
+"Lnl-aY-5KV.title" = "Вхід";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "MAS-Um-G5o"; */
+"MAS-Um-G5o.normalTitle" = "Вихід";
+
+/* Class = "UILabel"; text = "EMAIL"; ObjectID = "MjH-2l-WOQ"; */
+"MjH-2l-WOQ.text" = "Пошта";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "NK7-Cs-VZi"; */
+"NK7-Cs-VZi.text" = "Назва";
+
+/* Class = "UILabel"; text = "Sign Up"; ObjectID = "PPI-Bc-Nye"; */
+"PPI-Bc-Nye.text" = "Реєстрація";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "UkE-Q6-fzN"; */
+"UkE-Q6-fzN.title" = " ";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "WFK-V4-OCd"; */
+"WFK-V4-OCd.title" = "Зберегти";
+
+/* Class = "UILabel"; text = "City"; ObjectID = "Y0O-mY-Zf0"; */
+"Y0O-mY-Zf0.text" = "Місто";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "bz6-KV-lgZ"; */
+"bz6-KV-lgZ.title" = "Відміна";
+
+/* Class = "UILabel"; text = "Location"; ObjectID = "cCb-7o-WFJ"; */
+"cCb-7o-WFJ.text" = "Адреса";
+
+/* Class = "UILabel"; text = "device/serial"; ObjectID = "cRI-gm-xd0"; */
+"cRI-gm-xd0.text" = "device/serial";
+
+/* Class = "UITextField"; placeholder = "Tap to select location on map"; ObjectID = "dVe-4a-u6w"; */
+"dVe-4a-u6w.placeholder" = "Натиснути для вибору адреси на карті";
+
+/* Class = "UITextField"; placeholder = "Serial Number"; ObjectID = "eFp-Fn-ciX"; */
+"eFp-Fn-ciX.placeholder" = "Серійний номер";
+
+/* Class = "UILabel"; text = "Location"; ObjectID = "f5b-IX-1FZ"; */
+"f5b-IX-1FZ.text" = "Адреса";
+
+/* Class = "UINavigationItem"; title = "Recent notes"; ObjectID = "fR9-32-Oas"; */
+"fR9-32-Oas.title" = "Останні замітки";
+
+/* Class = "UITextField"; placeholder = "Device"; ObjectID = "gmb-wq-mIH"; */
+"gmb-wq-mIH.placeholder" = "Прилад";
+
+/* Class = "UILabel"; text = "Device"; ObjectID = "gyM-lw-Ykw"; */
+"gyM-lw-Ykw.text" = "Прилад";
+
+/* Class = "UITabBarItem"; title = "Recents"; ObjectID = "gyU-qZ-hNw"; */
+"gyU-qZ-hNw.title" = "Останні замітки";
+
+/* Class = "UINavigationItem"; title = "New Device"; ObjectID = "msi-QM-0eZ"; */
+"msi-QM-0eZ.title" = "Новий прилад";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "nCL-j2-v9E"; */
+"nCL-j2-v9E.text" = "Назва";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "sBP-i3-DSj"; */
+"sBP-i3-DSj.title" = "Зберегти";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "sbu-78-gdu"; */
+"sbu-78-gdu.title" = "Відміна";
+
+/* Class = "UILabel"; text = "USERNAME"; ObjectID = "t5c-VA-eRJ"; */
+"t5c-VA-eRJ.text" = "Ім'я користувача";
+
+/* Class = "UIViewController"; title = "Sign Up"; ObjectID = "tNU-hL-0VN"; */
+"tNU-hL-0VN.title" = "Вхід";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "vYk-Bl-amG"; */
+"vYk-Bl-amG.text" = "Title";
+
+/* Class = "UILabel"; text = "serial Number"; ObjectID = "xHC-FN-Vhn"; */
+"xHC-FN-Vhn.text" = "Серійний номер";
+
+/* Class = "UISegmentedControl"; zlo-ds-9la.segmentTitles[0] = "Service"; ObjectID = "zlo-ds-9la"; */
+"zlo-ds-9la.segmentTitles[0]" = "Сервіс";
+
+/* Class = "UISegmentedControl"; zlo-ds-9la.segmentTitles[1] = "Repair"; ObjectID = "zlo-ds-9la"; */
+"zlo-ds-9la.segmentTitles[1]" = "Ремонт";

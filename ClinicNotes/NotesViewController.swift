@@ -12,25 +12,27 @@ import Firebase
 class NotesViewController: UITableViewController {
     
     var selectedDevice: Device?
-    var selectedClinic: FIRClinic?
+    var selectedClinic: Clinic?
     var notes = Array<Note>()
-     let currentUser = Auth.auth().currentUser?.displayName
+    let currentUser = Auth.auth().currentUser?.displayName
+    var ref: DatabaseReference?
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        
-        
-        selectedDevice?.ref?.child("Notes").observe(.value, with: { (snapshot) in
+
+
+        let query = ref?.queryOrdered(byChild: "deviceRef").queryEqual(toValue: selectedDevice?.ref?.key)
+        query?.observe(.value) { (datasnapshot) in
             var _notes = Array<Note>()
-            for item in snapshot.children {
-                let note = Note(snapshot: item as! DataSnapshot)
+            for item in datasnapshot.children {
+                let item = item as! DataSnapshot
+                let note = Note(snapshot: item)
                 _notes.append(note)
             }
             self.notes = _notes
             self.tableView.reloadData()
-        })
-
+        }
+        
         
     }
     
@@ -38,6 +40,7 @@ class NotesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ref = Database.database().reference(withPath: "Notes")
         navigationItem.title = selectedDevice?.name
         self.tableView.tableFooterView = UIView()
         self.tableView.backgroundColor = .clear
@@ -58,13 +61,19 @@ class NotesViewController: UITableViewController {
         
         selectedDevice?.ref?.updateChildValues(["dateUpdated": dateUpdated,
                                                 "updatedBy": currentUser])
-        let note = Note(comment: source.noteTextField.text, type: type!, dateUpdated: dateUpdated, user: currentUser, device: selectedDevice!.name, clinic: selectedClinic!.name, serialNumber: selectedDevice?.serialNumder )
-        format.dateFormat = "dd,MM,yyyy,HH:mm:ss"
-        let deviceRef = self.selectedDevice?.ref?.child("Notes").child("note: \(format.string(from: date))")
+
         if source.incomeSegue == "showNote" {
             source.updateChildValues(dateUpdated: dateUpdated, currentUser: currentUser)
         } else {
-            deviceRef?.setValue(note.convertToDictionary())
+            let note = Note(comment: source.noteTextField.text, type: type!, dateUpdated: dateUpdated, user: currentUser, device: selectedDevice!.name , clinic: selectedClinic!.name, serialNumber: selectedDevice?.serialNumder, deviceRef: (selectedDevice!.ref?.key)! )
+            ref?.childByAutoId().setValue(note.convertToDictionary())
+            
+       
+            
+          
+            
+            
+            
         }
         
         
@@ -97,9 +106,9 @@ class NotesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-        let user = notes[indexPath.row].user == currentUser ? "You" : notes[indexPath.row].user
+        let user = notes[indexPath.row].user == currentUser ? NSLocalizedString("You", comment: "") : notes[indexPath.row].user
         cell.textLabel?.text = notes[indexPath.row].comment
-        cell.detailTextLabel?.text = "Last update: \(user); \(notes[indexPath.row].dateUpdated)"
+        cell.detailTextLabel?.text = "\(NSLocalizedString("Last update", comment: "")): \(user); \(notes[indexPath.row].dateUpdated)"
         cell.detailTextLabel?.textColor = .placeholderText
 
         return cell
@@ -109,9 +118,36 @@ class NotesViewController: UITableViewController {
         cell.backgroundColor = .clear
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "\(NSLocalizedString("Please add first note for", comment: "")) \(selectedDevice!.name)"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return notes.count > 0 ? 0 : 250
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedNote = notes[indexPath.row]
         performSegue(withIdentifier: "showNote", sender: selectedNote)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        if editingStyle == .delete {
+            let selectedNote = notes[indexPath.row]
+            if Auth.auth().currentUser?.displayName == selectedNote.user {
+                selectedNote.ref?.removeValue()
+            } else {
+                self.showAlert(title: NSLocalizedString("Delete denied!", comment: ""), message: NSLocalizedString("You not created this Note!", comment: ""))
+            
+            }
+            
+        }
+
     }
 
 

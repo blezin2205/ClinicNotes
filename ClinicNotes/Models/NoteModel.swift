@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 
+
 struct Note {
     
     let comment: String
@@ -18,9 +19,10 @@ struct Note {
     let device: String
     let clinic: String
     let serialNumber: String?
+    let deviceRef: String
     let ref: DatabaseReference?
     
-    init(comment: String, type: String, dateUpdated: String, user: String, device: String, clinic: String, serialNumber: String?) {
+    init(comment: String, type: String, dateUpdated: String, user: String, device: String, clinic: String, serialNumber: String?, deviceRef: String) {
         
         self.comment = comment
         self.type = type
@@ -29,8 +31,8 @@ struct Note {
         self.device = device
         self.clinic = clinic
         self.serialNumber = serialNumber
+        self.deviceRef = deviceRef
         self.ref = nil
-        
     }
     
     init(snapshot: DataSnapshot) {
@@ -44,10 +46,12 @@ struct Note {
         device = snapshotValue["device"] as! String
         serialNumber = snapshotValue["serialNumder"] as? String
         clinic = snapshotValue["clinic"] as! String
+        deviceRef = snapshotValue["deviceRef"] as! String
         
     }
     
     func convertToDictionary() -> Any {
-        return ["comment": comment, "type": type, "dateUpdated": dateUpdated, "user": user, "device": device, "serialNumder": serialNumber, "clinic": clinic]
+        return ["comment": comment, "type": type, "dateUpdated": dateUpdated, "user": user, "device": device, "serialNumder": serialNumber, "clinic": clinic, "deviceRef": deviceRef]
     }
+    
 }

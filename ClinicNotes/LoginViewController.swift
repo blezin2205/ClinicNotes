@@ -12,11 +12,21 @@ import FirebaseAuth
 import FirebaseDatabase
 import GoogleSignIn
 
+
+
+
+
 class LoginViewController: UIViewController {
     
     var userProfile: UserProfile?
     var labelEmpty = true
-    var slogan = "ClinicNotes App. Welcome!"
+    var slogan = NSLocalizedString("ClinicNotes App. Welcome!", comment: "")
+    var clinicVC = ClinicViewController()
+    
+    
+    
+    private var authService: AuthService!
+    
     
     
     lazy var customFBLoginButton: UIButton = {
@@ -24,8 +34,8 @@ class LoginViewController: UIViewController {
         let icon = UIImage(named: "icons8-facebook")!
         
         let loginButton = UIButton()
-        
-        loginButton.setTitle("Login with Facebook", for: .normal)
+        let title = NSLocalizedString("Login with Facebook", comment: "")
+        loginButton.setTitle(title, for: .normal)
         loginButton.frame = CGRect(x: 32, y: view.frame.maxY - 260, width: view.frame.width - 64, height: 50)
         loginButton.setImage(icon, for: .normal)
         loginButton.imageView?.contentMode = .scaleAspectFit
@@ -39,10 +49,10 @@ class LoginViewController: UIViewController {
     lazy var customGoogleLoginButton: UIButton = {
         
         let icon = UIImage(named: "icons8-google")!
-        
+        let title = NSLocalizedString("Login with Google", comment: "")
         let loginButton = UIButton()
         loginButton.frame = CGRect(x: 32, y: view.frame.maxY - 200, width: view.frame.width - 64, height: 50)
-        loginButton.setTitle("Login with Google", for: .normal)
+        loginButton.setTitle(title, for: .normal)
         loginButton.setImage(icon, for: .normal)
         loginButton.imageView?.contentMode = .scaleAspectFit
         loginButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -35, bottom: 0, right: 0)
@@ -53,11 +63,11 @@ class LoginViewController: UIViewController {
     }()
     
     lazy var signInWithEmail: UIButton = {
-        
+        let title = NSLocalizedString("Sign In with Email", comment: "")
         let icon = UIImage(named: "icons8-email")!
         let loginButton = UIButton()
         loginButton.frame = CGRect(x: 32, y: view.frame.maxY - 80, width: view.frame.width - 64, height: 50)
-        loginButton.setTitle("Sign In with Email", for: .normal)
+        loginButton.setTitle(title, for: .normal)
         loginButton.setImage(icon, for: .normal)
         loginButton.imageView?.contentMode = .scaleAspectFit
         loginButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -36, bottom: 0, right: 0)
@@ -105,11 +115,16 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        authService = SceneDelegate.shared().authService
+        authService.checkLoggedIn()
+        
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance()?.presentingViewController = self
         setupViews()
     }
+    
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
@@ -150,11 +165,9 @@ extension LoginViewController: LoginButtonDelegate {
     
     private func openMainViewController() {
         
+        authService.checkLoggedIn()
         self.dismiss(animated: true, completion: nil)
-        
-        
-        
-        
+
     }
     
     // *** FacebookCustomLoginButton ***
@@ -274,6 +287,7 @@ extension LoginViewController: GIDSignInDelegate {
             }
             print("Successfully logged into Firebase with Google")
             self.saveIntoFirebase()
+           
             
         }
         

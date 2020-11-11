@@ -10,13 +10,15 @@ import Firebase
 class SignUpViewController: UIViewController {
     
     var activityIndicator: UIActivityIndicatorView!
+    var authService: AuthService!
+    let titleLocalized = NSLocalizedString("Continue", comment: "")
     
     lazy var continueButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
         button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
         button.backgroundColor = .white
-        button.setTitle("Continue", for: .normal)
+        button.setTitle(titleLocalized, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitleColor(secondaryColor, for: .normal)
         button.layer.cornerRadius = 4
@@ -33,6 +35,8 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        authService = SceneDelegate.shared().authService
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         view.addSubview(continueButton)
         setContinueButton(enabled: false)
@@ -120,13 +124,14 @@ class SignUpViewController: UIViewController {
         
         
         
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { [titleLocalized] (user, error) in
             
             if let error = error {
+                self.showAlert(title: "Error!", message: error.localizedDescription)
                 print(error.localizedDescription)
                 
                 self.setContinueButton(enabled: true)
-                self.continueButton.setTitle("Continue", for: .normal)
+                self.continueButton.setTitle(titleLocalized, for: .normal)
                 self.activityIndicator.stopAnimating()
                 return
                 }
@@ -136,6 +141,7 @@ class SignUpViewController: UIViewController {
                 changeRequest.displayName = userName
                 changeRequest.commitChanges(completion: { (error) in
                     if let error = error {
+                        self.showAlert(title: "Error!", message: error.localizedDescription)
                         print(error.localizedDescription)
                         
                         self.setContinueButton(enabled: true)
@@ -144,6 +150,7 @@ class SignUpViewController: UIViewController {
                     }
                     print("User display name changed!")
                     self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    self.authService.checkLoggedIn()
                     
                 })
             }

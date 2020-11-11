@@ -1,0 +1,44 @@
+/* 
+  Localization.strings
+  ClinicNotes
+
+  Created by Blezin on 22.10.2020.
+  Copyright © 2020 Blezin'sDev. All rights reserved.
+*/
+
+
+"Login with Facebook" = "Login with Facebook";
+"Login with Google" = "Login with Google";
+"Sign In with Email" = "Sign In with Email";
+"ClinicNotes App. Welcome!" = "ClinicNotes App. Welcome!";
+"Continue" = "Continue";
+"Clinics" = "Clinics";
+"Recents" = "Recents";
+"Clinic, Location or City" = "Clinic, Location or City";
+"Please add first one here" = "Please add first one here";
+"Delete denied!" = "Delete denied!"
+"You not created this Clinic!" = "You not created this Clinic!"
+"created by" = "created by";
+"Camera" = "Camera";
+"Photo" = "Photo";
+"Cancel" = "Cancel";
+"Error" = "Error";
+"Location not exist or empty";
+"You not created this Device!" = "You not created this Device!";
+"Please add first device for" = "Please add first device for";
+"Last update" = "Last update";
+"Created by" = "Created by";
+"You" = "You";
+"Done" = "Done";
+"Please add first note for" = "Please add first note for";
+"You not created this Note!" = "You not created this Note!";
+"Added" = "Added";
+"No any notes yet" = "No any notes yet";
+"You not created this Note!" = "You not created this Note!";
+"User location not defined!" = "User location not defined!";
+"Street can't be defined!" = "Street can't be defined!";
+
+
+
+
+

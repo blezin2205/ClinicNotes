@@ -10,8 +10,6 @@ import Foundation
 import GoogleMaps
 import CoreLocation
 import GooglePlaces
-import Alamofire
-import SwiftyJSON
 import Firebase
 
 protocol MapViewControllerDelegate {
@@ -20,9 +18,7 @@ protocol MapViewControllerDelegate {
 
 class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate {
     
-    var clinic: FIRClinic?
-    var clinicLocation: String?
-    var clinicName: String?
+    var clinic: Clinic?
     var mapViewControllerDelegate: MapViewControllerDelegate?
     var currentCity: String?
     var viewForSearch: UIView?
@@ -113,6 +109,7 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
     }
     
     @objc func getAddress(_ sender: UIButton) {
+        
         mapViewControllerDelegate?.getAddress(addressLabel.text,
                                               currentCity,
                                               endCoord?.coordinate.longitude.description,
@@ -151,7 +148,7 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         guard  let userLocation = locations.last else {
-            addressLabel.text = "User location not defined!"
+            addressLabel.text = NSLocalizedString("User location not defined!", comment: "")
             return }
         let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         endCoord = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
@@ -174,7 +171,7 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
             self.currentCity = placemark?.locality
 
             if streetName == nil || streetName == "Unnamed Road" {
-                self.addressLabel.text = "Street can't be defined!"
+                self.addressLabel.text = NSLocalizedString("Street can't be defined!", comment: "")
             } else {
                 self.addressLabel.text = "\(streetName!)"
             }
@@ -202,7 +199,7 @@ class GooglemapVC: UIViewController, CLLocationManagerDelegate, GMSMapViewDelega
             if let streetName = firstResult.thoroughfare {
                 self.addressLabel.text = streetName
             } else {
-                self.addressLabel.text = "Street can't be defined!"
+                self.addressLabel.text = NSLocalizedString("Street can't be defined!", comment: "")
             }
             
             self.currentCity = response.firstResult()?.locality

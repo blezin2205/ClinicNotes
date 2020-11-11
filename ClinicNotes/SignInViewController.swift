@@ -12,13 +12,16 @@ import Firebase
 class SignInViewController: UIViewController {
     
     var activityIndicator = UIActivityIndicatorView()
+    var authService: AuthService!
+    let titleLocalized = NSLocalizedString("Continue", comment: "")
     
     lazy var continueButton: UIButton = {
+       
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
         button.center = CGPoint(x: view.center.x, y: view.frame.height - 100)
         button.backgroundColor = .white
-        button.setTitle("Continue", for: .normal)
+        button.setTitle(titleLocalized, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitleColor(secondaryColor, for: .normal)
         button.layer.cornerRadius = 4
@@ -34,6 +37,7 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         
         
+        authService = SceneDelegate.shared().authService
         
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         
@@ -118,23 +122,21 @@ class SignInViewController: UIViewController {
         let password = passwordTextField.text
             else {return}
         
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { [titleLocalized] (user, error) in
             
             if let error = error {
                 print(error.localizedDescription)
-                
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                
+                self.showAlert(title: "Error!", message: error.localizedDescription)
                 self.setContinueButton(enabled: true)
-                self.continueButton.setTitle("Continue", for: .normal)
+                self.continueButton.setTitle(titleLocalized, for: .normal)
                 self.activityIndicator.stopAnimating()
                 return
             }
             
             print("Succes Logged In with Email")
             self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+            self.authService.checkLoggedIn()
+            
         }
     }
 }

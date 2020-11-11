@@ -12,10 +12,13 @@ import Firebase
 class RecentsViewController: UITableViewController {
     
     var ref: DatabaseReference?
-    
-    let format = DateFormatter()
-    var notes = Array<Note>()
-    
+  
+    var notesArray = Array<Note>()
+
+    var fetchingMore = false
+    var endReached = false
+
+
     let myRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
@@ -23,7 +26,8 @@ class RecentsViewController: UITableViewController {
     }()
     
     override func viewWillAppear(_ animated: Bool) {
-        fetchFirebaseData()
+
+
     }
 
     override func viewDidLoad() {
@@ -33,63 +37,17 @@ class RecentsViewController: UITableViewController {
         self.tableView.backgroundColor = .clear
         setTableViewBackgroundGradient()
         tableView.refreshControl = myRefreshControl
-        ref = Database.database().reference(withPath: "Cliniks")
+        ref = Database.database().reference(withPath: "Notes")
      
-        
+       
     }
 
     @objc private func refresh(sender: UIRefreshControl) {
-        fetchFirebaseData()
+
         sender.endRefreshing()
 
     }
-    
 
-    
-    
-    private func fetchFirebaseData() {
-        ref?.observeSingleEvent(of: .value) { snapshot in
-            
-            var _notes = Array<Note>()
-            let notes = snapshot.children.allObjects
-            
-            for i in notes {
-                let a = i as! DataSnapshot
-                
-                let devices = a.childSnapshot(forPath: "Devices")
-                let note = devices.children
-                
-                for b in note {
-                    let c = b as! DataSnapshot
-                    let notes = c.childSnapshot(forPath: "Notes")
-                    let comment = notes.children
-                    
-                    for note in comment {
-                        let noteSnapshot = note as! DataSnapshot
-                        let note = Note(snapshot: noteSnapshot)
-                        _notes.append(note)
-                    }
-                    
-                    self.notes = _notes.sorted(by: { (id1, id2) -> Bool in
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "dd/MM/yyyy, HH:mm:ss"
-                        if let dateA = dateFormatter.date(from: id1.dateUpdated),
-                            let dateB = dateFormatter.date(from: id2.dateUpdated) {
-                            return dateA.compare(dateB) == .orderedDescending
-                        }
-                        return false
-                    })
-                    self.tableView.reloadData()
-                    
-                    
-                }
-            }
-        }
-
-    }
-    
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "showRecent" {
@@ -105,29 +63,61 @@ class RecentsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return notes.count
+        return notesArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomRecentsCell
 
-        cell.commentLabel.text = notes[indexPath.row].comment
-        cell.clinicNameLabel.text = notes[indexPath.row].clinic
-        cell.deviceLabel.text = notes[indexPath.row].device
-        let user = Auth.auth().currentUser?.displayName == notes[indexPath.row].user ? "You" : notes[indexPath.row].user
-        cell.userDateLabel.text = "Added: \(user), \(notes[indexPath.row].dateUpdated)"
+        cell.commentLabel.text = notesArray[indexPath.row].comment
+        cell.clinicNameLabel.text = notesArray[indexPath.row].clinic
+        cell.deviceLabel.text = notesArray[indexPath.row].device
+        let user = Auth.auth().currentUser?.displayName == notesArray[indexPath.row].user ? NSLocalizedString("You", comment: "") : notesArray[indexPath.row].user
+        cell.userDateLabel.text = "\(NSLocalizedString("Added", comment: "")): \(user), \(notesArray[indexPath.row].dateUpdated)"
+        
 
+        
         return cell
     }
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .clear
-       }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = NSLocalizedString("No any notes yet", comment: "")
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return notesArray.count > 0 ? 0 : 250
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedNote = notes[indexPath.row]
+        let selectedNote = notesArray[indexPath.row]
         performSegue(withIdentifier: "showRecent", sender: selectedNote)
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        if editingStyle == .delete {
+            let selectedNote = notesArray[indexPath.row]
+            if Auth.auth().currentUser?.displayName == selectedNote.user {
+                notesArray.remove(at: indexPath.row)
+                selectedNote.ref?.removeValue()
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                self.showAlert(title: NSLocalizedString("Delete denied!", comment: ""), message: NSLocalizedString("You not created this Note!", comment: ""))
+            
+            }
+            
+        }
+
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+        
+    }
 
 }
