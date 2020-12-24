@@ -37,7 +37,6 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         
         
-        authService = SceneDelegate.shared().authService
         
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         
@@ -135,7 +134,7 @@ class SignInViewController: UIViewController {
             
             print("Succes Logged In with Email")
             self.presentingViewController?.presentingViewController?.dismiss(animated: true)
-            self.authService.checkLoggedIn()
+            
             
         }
     }

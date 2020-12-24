@@ -107,10 +107,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
         
     }
-    
-    func setBackgroundImage() {
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "4153735.png")!)
-    }
+
 }
 
 
@@ -129,6 +126,24 @@ extension UITableViewController {
         let backgroundView = UIView(frame: self.tableView.bounds)
         backgroundView.layer.insertSublayer(gradientLayer, at: 0)
         self.tableView.backgroundView = backgroundView
+    }
+}
+
+extension UIApplication {
+    
+    
+    class func getTopViewController(base: UIViewController?) -> UIViewController? {
+        
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+            
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(base: selected)
+            
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
     }
 }
 

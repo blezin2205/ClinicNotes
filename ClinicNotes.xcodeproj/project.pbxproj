@@ -30,13 +30,15 @@
 		FA7952EA25289092009D3315 /* CustomClinicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952E525289091009D3315 /* CustomClinicCell.swift */; };
 		FA7952F1252891DB009D3315 /* ClinicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F0252891DB009D3315 /* ClinicViewController.swift */; };
 		FA7952F3252891E8009D3315 /* DetailClinicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F2252891E8009D3315 /* DetailClinicViewController.swift */; };
-		FA7952F72528A124009D3315 /* MyRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952F62528A124009D3315 /* MyRef.swift */; };
 		FA7952F92528B190009D3315 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA7952F82528B190009D3315 /* GoogleService-Info.plist */; };
 		FA7952FB25292370009D3315 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7952FA25292370009D3315 /* DevicesViewController.swift */; };
 		FA7D5C662541EEEA00BC2640 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA7D5C682541EEEA00BC2640 /* Localizable.strings */; };
 		FA7F79002547410200008C31 /* FIRNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F78FF2547410200008C31 /* FIRNetworkService.swift */; };
 		FA7F79022547459600008C31 /* ClinicNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F79012547459600008C31 /* ClinicNetworkService.swift */; };
 		FA7F790525474CE100008C31 /* GetClinicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F790425474CE100008C31 /* GetClinicResponse.swift */; };
+		FAB98283258808F7008F2F33 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB98282258808F7008F2F33 /* AuthError.swift */; };
+		FAB9828525880938008F2F33 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB9828425880938008F2F33 /* Validators.swift */; };
+		FAB9828725880D61008F2F33 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB9828625880D61008F2F33 /* MainTabBarController.swift */; };
 		FABB3F7B252F73DC00A828D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB3F7A252F73DC00A828D8 /* MapViewController.swift */; };
 		FABB3F7D252F9C1D00A828D8 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB3F7C252F9C1D00A828D8 /* MapManager.swift */; };
 		FAE4267225376389005B0E73 /* CustomDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4267125376389005B0E73 /* CustomDeviceCell.swift */; };
@@ -74,7 +76,6 @@
 		FA7952E825289092009D3315 /* ClinicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicModel.swift; sourceTree = "<group>"; };
 		FA7952F0252891DB009D3315 /* ClinicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicViewController.swift; sourceTree = "<group>"; };
 		FA7952F2252891E8009D3315 /* DetailClinicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClinicViewController.swift; sourceTree = "<group>"; };
-		FA7952F62528A124009D3315 /* MyRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRef.swift; sourceTree = "<group>"; };
 		FA7952F82528B190009D3315 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA7952FA25292370009D3315 /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
 		FA7D5C602541EE2500BC2640 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Main.strings; sourceTree = "<group>"; };
@@ -86,6 +87,9 @@
 		FA7F78FF2547410200008C31 /* FIRNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIRNetworkService.swift; sourceTree = "<group>"; };
 		FA7F79012547459600008C31 /* ClinicNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicNetworkService.swift; sourceTree = "<group>"; };
 		FA7F790425474CE100008C31 /* GetClinicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetClinicResponse.swift; sourceTree = "<group>"; };
+		FAB98282258808F7008F2F33 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		FAB9828425880938008F2F33 /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		FAB9828625880D61008F2F33 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		FABB3F7A252F73DC00A828D8 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FABB3F7C252F9C1D00A828D8 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		FAE4267125376389005B0E73 /* CustomDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceCell.swift; sourceTree = "<group>"; };
@@ -127,10 +131,10 @@
 		FA6B5E01255C64AE006FE4BB /* DeviceMVC */ = {
 			isa = PBXGroup;
 			children = (
+				FA6B5E02255C64BD006FE4BB /* Model */,
+				FA6B5E03255C64C5006FE4BB /* View */,
 				FA6B5E04255C64CA006FE4BB /* Controller */,
 				FA6B5E05255C64D0006FE4BB /* Helpers */,
-				FA6B5E03255C64C5006FE4BB /* View */,
-				FA6B5E02255C64BD006FE4BB /* Model */,
 			);
 			path = DeviceMVC;
 			sourceTree = "<group>";
@@ -193,6 +197,7 @@
 				FA7952C125288C0D009D3315 /* AppDelegate.swift */,
 				FA7952C325288C0D009D3315 /* SceneDelegate.swift */,
 				FA7952D825288E59009D3315 /* LoginViewController.swift */,
+				FAB9828625880D61008F2F33 /* MainTabBarController.swift */,
 				FA7952DA25288E96009D3315 /* SignInViewController.swift */,
 				FA7952DC25288EA5009D3315 /* SignUpViewController.swift */,
 				FA7F78FB254734DD00008C31 /* ClinicMVC */,
@@ -236,10 +241,11 @@
 			isa = PBXGroup;
 			children = (
 				FA7952E22528907D009D3315 /* Extansions.swift */,
-				FA7952F62528A124009D3315 /* MyRef.swift */,
 				FABB3F7C252F9C1D00A828D8 /* MapManager.swift */,
 				FA5B40E025409A8C004F6DFB /* AuthService.swift */,
 				FA7F78FF2547410200008C31 /* FIRNetworkService.swift */,
+				FAB98282258808F7008F2F33 /* AuthError.swift */,
+				FAB9828425880938008F2F33 /* Validators.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -438,8 +444,8 @@
 				FA7F790525474CE100008C31 /* GetClinicResponse.swift in Sources */,
 				FA5B40E125409A8C004F6DFB /* AuthService.swift in Sources */,
 				FAE4267225376389005B0E73 /* CustomDeviceCell.swift in Sources */,
+				FAB9828725880D61008F2F33 /* MainTabBarController.swift in Sources */,
 				FA7952F1252891DB009D3315 /* ClinicViewController.swift in Sources */,
-				FA7952F72528A124009D3315 /* MyRef.swift in Sources */,
 				FA2CBA41253F12E900CB0A28 /* CustomRecentsCell.swift in Sources */,
 				FA7952C425288C0D009D3315 /* SceneDelegate.swift in Sources */,
 				FA7952E32528907D009D3315 /* Extansions.swift in Sources */,
@@ -453,6 +459,8 @@
 				FA5622882534E86800DBCFC5 /* DeviceModel.swift in Sources */,
 				FABB3F7D252F9C1D00A828D8 /* MapManager.swift in Sources */,
 				FA2CBA43253F930B00CB0A28 /* UserProfile.swift in Sources */,
+				FAB9828525880938008F2F33 /* Validators.swift in Sources */,
+				FAB98283258808F7008F2F33 /* AuthError.swift in Sources */,
 				FA7F79022547459600008C31 /* ClinicNetworkService.swift in Sources */,
 				FA7952E925289092009D3315 /* ClinicModel.swift in Sources */,
 				FA6B5E0A255C66D4006FE4BB /* GetDeviceResponse.swift in Sources */,

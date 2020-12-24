@@ -9,50 +9,26 @@
 import UIKit
 import Firebase
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthServiceDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var authService: AuthService!
-    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
 
-    
-  
-    
-    static func shared() -> SceneDelegate {
-        let scene = UIApplication.shared.connectedScenes.first
-        let sd: SceneDelegate = (((scene?.delegate as? SceneDelegate)!))
-        return sd
-    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        authService = AuthService()
-        authService.delegate = self
-        let clinicVC = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        window?.rootViewController = clinicVC
-        window?.makeKeyAndVisible()
 
-    }
-    
-    func authServiceSignIn() {
+
         
-        let titleClinic = NSLocalizedString("Clinics", comment: "")
-        let titleRecents = NSLocalizedString("Recents", comment: "")
-        let clinicVC = storyBoard.instantiateViewController(withIdentifier: "ClinicViewController") as! ClinicViewController
-        let recentVC = storyBoard.instantiateViewController(withIdentifier: "RecentsViewController") as! RecentsViewController
-        let navVC = UINavigationController(rootViewController: clinicVC)
-        let recentNavVC = UINavigationController(rootViewController: recentVC)
-        let tabBarController = UITabBarController()
-        navVC.tabBarItem = UITabBarItem(title: titleClinic, image: UIImage(systemName: "table"), selectedImage: UIImage(systemName: "table.fill"))
-        recentNavVC.tabBarItem = UITabBarItem(title: titleRecents, image: UIImage(systemName: "clock"), selectedImage: UIImage(systemName: "clock.fill"))
-        tabBarController.viewControllers = [navVC, recentNavVC]
-        window?.rootViewController = tabBarController
+        if let user = Auth.auth().currentUser {
+            let mainTabBar = MainTabBarController()
+            mainTabBar.modalPresentationStyle = .fullScreen
+            window?.rootViewController = mainTabBar
 
-       }
+        } 
+    }
 
 
     func sceneDidDisconnect(_ scene: UIScene) {

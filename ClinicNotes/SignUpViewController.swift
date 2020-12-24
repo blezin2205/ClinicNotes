@@ -36,7 +36,6 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
 
         
-        authService = SceneDelegate.shared().authService
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         view.addSubview(continueButton)
         setContinueButton(enabled: false)
@@ -150,7 +149,7 @@ class SignUpViewController: UIViewController {
                     }
                     print("User display name changed!")
                     self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-                    self.authService.checkLoggedIn()
+                    
                     
                 })
             }

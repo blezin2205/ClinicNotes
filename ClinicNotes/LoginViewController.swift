@@ -21,11 +21,9 @@ class LoginViewController: UIViewController {
     var userProfile: UserProfile?
     var labelEmpty = true
     var slogan = NSLocalizedString("ClinicNotes App. Welcome!", comment: "")
-    var clinicVC = ClinicViewController()
     
-    
-    
-    private var authService: AuthService!
+    let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
+    let activityView = UIActivityIndicatorView(style: .large)
     
     
     
@@ -115,9 +113,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authService = SceneDelegate.shared().authService
-        authService.checkLoggedIn()
-        
+   
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance()?.presentingViewController = self
@@ -140,6 +136,15 @@ class LoginViewController: UIViewController {
         
         
     }
+    
+     func showActivityIndicatory() {
+        
+        activityView.center = self.view.center
+        self.view.bringSubviewToFront(activityView)
+        activityView.startAnimating()
+    }
+    
+    
     @objc private func openSignInVC() {
         performSegue(withIdentifier: "SignIn", sender: self)
     }
@@ -148,25 +153,11 @@ class LoginViewController: UIViewController {
 
 // MARK: Facebook SDK
 
-extension LoginViewController: LoginButtonDelegate {
+extension LoginViewController {
     
-    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
-        
-        if error != nil {
-            return
-        }
-        guard AccessToken.isCurrentAccessTokenActive else { return }
-        signIntoFirebase()
-    }
-    
-    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        
-    }
     
     private func openMainViewController() {
         
-        authService.checkLoggedIn()
-        self.dismiss(animated: true, completion: nil)
 
     }
     
@@ -262,34 +253,24 @@ extension LoginViewController: GIDSignInDelegate {
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         
-        if let error = error {
-            print("Failed to logg into Google", error)
-            return
-        }
-        print("Successfuly loged in to Google")
-        
-        if let userName = user.profile.name, let userEmail = user.profile.email {
-            let userData = ["name": userName, "email": userEmail]
-            userProfile = UserProfile(data: userData)
-        }
-        
-        
-        
-        
-        
-        guard let authentication = user.authentication else {return}
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                       accessToken: authentication.accessToken)
-        Auth.auth().signIn(with: credential) { (user, error) in
-            if let error = error {
-                print("Something went wrong with our Google user", error)
-                return
-            }
-            print("Successfully logged into Firebase with Google")
-            self.saveIntoFirebase()
-           
+        showActivityIndicatory()
+        AuthService.shared.googleLogin(user: user, error: error) { (result) in
             
+            switch result {
+                
+            case .success(let user):
+                let mainTabBar = MainTabBarController()
+                mainTabBar.modalPresentationStyle = .fullScreen
+                UIApplication.getTopViewController(base: self.keyWindow)?.present(mainTabBar, animated: true, completion: {
+                    self.activityView.stopAnimating()
+                })
+                
+            case .failure(_):
+                self.showAlert(title: "Error!", message: error.localizedDescription)
+            }
         }
+        
+        
         
     }
     
